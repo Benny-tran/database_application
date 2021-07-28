@@ -4,15 +4,19 @@
 <!------ Include the above in your HEAD tag ---------->
 <link rel='stylesheet' type='text/css' href='style.css' />
 <!--Bottom Footer-->
+<footer class="footer footer-black footer-white">
+	<div class="wrapper">
 		<div class="bottom section-padding">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-center">
 						<div class="copyright">
-							<p>© <span>2021</span> <a href="#" class="transition">Database Application</a> All rights reserved.</p>
+							<p>© <span>2021</span> Database Application All rights reserved.</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</footer>
 <!--Bottom Footer-->

@@ -1,7 +1,7 @@
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 
 .navbar_icon_top .navbar-nav .nav-link > .fa {
-  position: absolute;
+  position: fixed;
   width: 36px;
   font-size: 24px;
 
@@ -46,4 +46,14 @@
     top: -7px;
   }
 }
-
+.navbar .navbar-wrapper {
+  display: inline-flex;
+  align-items: center; }
+  .navbar .navbar-wrapper .navbar-minimize {
+    padding-right: 10px; }
+    .navbar .navbar-wrapper .navbar-minimize .btn {
+      margin: 0; }
+  .navbar .navbar-wrapper .navbar-toggle .navbar-toggler {
+    padding-left: 0; }
+  .navbar .navbar-wrapper .navbar-toggle:hover .navbar-toggler-bar.bar2 {
+    width: 22px; }

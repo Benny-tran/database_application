@@ -11,13 +11,16 @@
     <title>Header</title>
 </head>
 <body>
-<nav class="navbar sticky-top navbar_icon_top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Database Application</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+  
+<nav class="navbar fixed-top navbar_icon_top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <a class="navbar-brand" href="#">Database Application</a>
+    </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon navbar-kebab"></span>
   </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navigation">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link" href="#">
@@ -28,5 +31,6 @@
         </li>
       </ul>
     </div>
+  </div>
 </nav>
 </body>

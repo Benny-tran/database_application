@@ -1,12 +1,12 @@
 
-a:hover{
+p:hover{
     text-decoration:none;
 }
 .section-padding {
 	padding: 60px 0;
 }
 .bottom {
-    background-color: #0a1c2e;
+    background-color: #343536;
 }
 .bottom .copyright {
     color: #e5e5e5;
@@ -24,8 +24,11 @@ a:hover{
     font-weight: 400;
 }
 .copyright p span {
-    color: #d1caca;
+    color: #eeeeee;
 }
 .bottom .copyright p, .bottom .copyright a:hover{
-    color: #6c6d83;
+    color: #c5c5c5;
 }
+.wrapper {
+    max-width: 1170px;
+  }
