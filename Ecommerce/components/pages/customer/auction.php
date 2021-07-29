@@ -53,7 +53,7 @@
                                             <div class="control__indicator"></div>
                                         </label>
                                     </th>
-                                    <th>Name</th>
+                                    <th>Name111</th>
                                     <th>Code</th>
                                     <th>Status</th>
                                     <th>Original Price</th>
