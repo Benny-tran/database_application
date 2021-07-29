@@ -24,7 +24,7 @@
 
 <body>
 <?php include '../header/header.php'; ?>
-<div class="wrapper">
+    <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
             <div class="sidebar-header">
@@ -70,25 +70,70 @@
 
         <!-- Page Content Holder -->
         <div id="content">
-            
-            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <div class="line"></div>
-
-            <h2>Lorem Ipsum Dolor</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <div class="line"></div>
-
-            <h2>Lorem Ipsum Dolor</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <div class="line"></div>
-
-            <h3>Lorem Ipsum Dolor</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> Shopping Cart</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Country</th>
+                                        <th>City</th>
+                                        <th class="text-right">Salary</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><img src="../../img/images.jpeg" height=30% width=30% alt="" border=3 height=100 width=300></img></td>
+                                        <td>Dakota Rice</td>
+                                        <td>Niger</td>
+                                        <td>Oud-Turnhout</td>
+                                        <td class="text-right">$36,738</td>
+                                    </tr>
+                                    <tr>
+                                    <td><img src="../../img/images.jpeg" height=30% width=30% alt="" border=3 height=100 width=300></img></td>
+                                        <td>Minerva Hooper</td>
+                                        <td>Curaçao</td>
+                                        <td>Sinaai-Waas</td>
+                                        <td class="text-right">$23,789</td>
+                                    </tr>
+                                    <tr>
+                                    <td><img src="../../img/images.jpeg" height=30% width=30% alt="" border=3 height=100 width=300></img></td>
+                                        <td>Sage Rodriguez</td>
+                                        <td>Netherlands</td>
+                                        <td>Baileux</td>
+                                        <td class="text-right">$56,142</td>
+                                    </tr>
+                                    <tr>
+                                    <td><img src="../../img/images.jpeg" height=30% width=30% alt="" border=3 height=100 width=300></img></td>
+                                        <td>Philip Chaney</td>
+                                        <td>Korea, South</td>
+                                        <td>Overland Park</td>
+                                        <td class="text-right">$38,735</td>
+                                    </tr>
+                                    <tr>
+                                    <td><img src="../../img/images.jpeg" height=30% width=30% alt="" border=3 height=100 width=300></img></td>
+                                        <td>Doris Greene</td>
+                                        <td>Malawi</td>
+                                        <td>Feldkirchen in Kärnten</td>
+                                        <td class="text-right">$63,542</td>
+                                    </tr> 
+                                </tbody>
+                            </table>
+                            <div>
+                                <a>Total: $3350</a>
+                            </div>
+                            <div>
+                            <button type="submit" name="button" class="btn login_btn">Confirm Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

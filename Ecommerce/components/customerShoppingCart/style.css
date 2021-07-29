@@ -105,3 +105,25 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
+.login_btn {
+  width: 100%;
+  transition: all .5s ease;
+  color: #4D4D4D;
+  font-family:'Montserrat', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  font-size: 17px;
+  background-color : 4D4D4D;
+  padding: 10px;
+  outline: none;
+  border-radius: 4px;
+}
+.login_btn:hover {
+  color: #001F3F;
+  background-color: #fff;
+}
+.login_btn:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
