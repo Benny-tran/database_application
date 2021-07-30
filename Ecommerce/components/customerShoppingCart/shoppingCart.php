@@ -124,18 +124,19 @@
                                     </tr> 
                                 </tbody>
                             </table>
-                            <div>
-                                <a>Total: $3350</a>
-                            </div>
-                            <div>
-                            <button type="submit" name="button" class="btn login_btn">Confirm Purchase</button>
+                                <div class="order_total">
+                                    <div class="order_total_content text-md-right">
+                                        <div class="order_total_title">Order Total:</div>
+                                        <div class="order_total_amount">$22000</div>
+                                        <button type="submit" class="btn cart_button_clear">Confirm Purchase</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
