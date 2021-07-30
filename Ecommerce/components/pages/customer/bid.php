@@ -31,6 +31,9 @@
 
 <body>
     <?php include '../header/header.php' ?>
+
+    <?php include '../../layout/layout.php' ?>
+
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">

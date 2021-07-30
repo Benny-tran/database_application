@@ -30,7 +30,10 @@
 </head>
 
 <body>
-    <?php include '../header/header.php' ?> 
+    <?php include '../../layout/header.php' ?>
+    <!-- Sidebar template -->
+
+    <?php include '../../layout/layout.php' ?>
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
@@ -221,7 +224,7 @@
         </div>
     </div>
 
-    <!-- page-wrapper -->
+   <!-- page-wrapper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
