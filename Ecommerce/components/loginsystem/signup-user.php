@@ -49,7 +49,7 @@
                         <input class="form-control" type="text" name="phone" placeholder="Phone Number" required value="<?php echo $phone ?>">
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="citizenID" placeholder="CCCD or CMND" required value="<?php echo $citizenID ?>">
+                        <input class="form-control" type="text" name="citizenID" placeholder="CCCD last 8 digits" required value="<?php echo $citizenID ?>">
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="password" name="password" placeholder="Password" required>
