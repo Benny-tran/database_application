@@ -30,10 +30,10 @@
 </head>
 
 <body>
-    <!-- <?php include '../../layout/header.php' ?> -->
+    <?php include '../../layout/header.php' ?>
     <!-- Sidebar template -->
 
-    <!-- <?php include '../../layout/layout.php' ?> -->
+    <?php include '../../layout/layout.php' ?>
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
