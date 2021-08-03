@@ -85,7 +85,7 @@
                 <div class="col-md-12">
                     <div class="container mt-5 mr-5">
                         <div class="row">
-                            <div class="mt-3 col-md-10 mb-3">
+                            <div class="mt-4 col-md-10 mb-2">
                                 <form style="margin:left; width:85% ">
                                     <input id="search_bar" type="text" placeholder="Search by Name, Code...."
                                         style="width:100%;display:block">
@@ -95,6 +95,7 @@
                             <div class="mt-3 col-md-2 mb-3">
                                 <button class="btn"><i class="fa fa-filter"></i></button>
                             </div>
+                            <!-- another modal or sidebar? -->
                         </div>
                     </div>
 
@@ -105,10 +106,28 @@
                             </div>
 
                             <div class="mt-5 col-md-3 mb-5">
-                                <button class="btn default">Create Auction <i class="fa fa-pencil-alt"></i></button>
-                            </div>
-                            <!-- Create Auction button -->
+                                <button class="btn default" id="createAuction">Create Auction
+                                    <i class="fa fa-pencil-alt"></i></button>
 
+                            </div>
+                        </div>
+                        <div id="createAuctionModal" class="modal">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2>Create Auction</h2>
+                                    <span class="close">&times;</span>
+
+                                </div>
+                                <div class="modal-body">
+                                    <p>Name</p>
+                                    <p>Code (optional)</p>
+                                    <p>Starting Price $</p>
+                                    <p>Closing Time</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary">Create Auction</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -271,8 +290,31 @@
                 })
             }
         });
-
-
-
     });
+    // Get the modal
+    var modal = document.getElementById("createAuctionModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("createAuction");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
 </script>
