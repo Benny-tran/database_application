@@ -46,7 +46,7 @@ if(isset($_POST['signup'])){
                 $errors['otp-error'] = "Failed while sending code!";
             }
         }else{
-            $errors['db-error'] = "Failed while inserting data into database!";
+            $errors['db-error'] = "This information may exist in the system. Please try again!";
         }
     }
 
