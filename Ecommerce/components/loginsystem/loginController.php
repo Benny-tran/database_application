@@ -26,8 +26,10 @@ if(isset($_POST['signup'])){
         $encpass = password_hash($password, PASSWORD_BCRYPT);
         $code = rand(999999, 111111);
         $status = "not verified";
-        $insert_data = "INSERT INTO CUSTOMER (citizenID, name, email, phone, password, code, status)
-                        values('$citizenID', '$name', '$email', '$phone', '$encpass', '$code', '$status')";
+        // $insert_data = "INSERT INTO CUSTOMER (citizenID, name, email, phone, password, code, status)
+        //                 values('$citizenID', '$name', '$email', '$phone', '$encpass', '$code', '$status')";
+        // Use Procedure for Signup Customer
+        $insert_data = "CALL signupCustomer('$citizenID','$name','$email','$phone','$encpass','$code','$stat')";
         $data_check = mysqli_query($con, $insert_data);
         if($data_check){
             $subject = "Email Verification Code";
@@ -82,7 +84,9 @@ if(isset($_POST['signup'])){
     if(isset($_POST['login'])){
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
-        $check_email = "SELECT * FROM CUSTOMER WHERE email = '$email'";
+        // $check_email = "SELECT * FROM CUSTOMER WHERE email = '$email'";
+        // Use Procedure for Login Customer
+        $check_email = "CALL loginCustomer('$email')" ;
         $res = mysqli_query($con, $check_email);
         if(mysqli_num_rows($res) > 0){
             $fetch = mysqli_fetch_assoc($res);
@@ -111,8 +115,8 @@ if(isset($_POST['signup'])){
     if(isset($_POST['adminLogin'])){
         $username = mysqli_real_escape_string($con, $_POST['username']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
-        $check_admin = "SELECT * fROM `ADMIN` WHERE username = '$username'
-        and password = '$password'";
+        // $check_admin = "SELECT * fROM `ADMIN` WHERE username = '$username' and password = '$password'";
+        $check_admin = "CALL loginAdmin('$username', '$password')";
         $res = mysqli_query($con, $check_admin);
         if(mysqli_num_rows($res) > 0){
             $fetch = mysqli_fetch_assoc($res);
