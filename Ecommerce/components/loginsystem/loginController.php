@@ -3,6 +3,7 @@ session_start();
 require "db.php";
 $email = "";
 $name = "";
+$username = "";
 $errors = array();
 
 //if user signup button
@@ -105,4 +106,20 @@ if(isset($_POST['signup'])){
             $errors['email'] = "It's look like you're not yet a member! Click on the bottom link to signup.";
         }
     }
+
+    //if admin login button
+    if(isset($_POST['adminLogin'])){
+        $username = mysqli_real_escape_string($con, $_POST['username']);
+        $password = mysqli_real_escape_string($con, $_POST['password']);
+        $check_admin = "SELECT * fROM `ADMIN` WHERE username = '$username'
+        and password = '$password'";
+        $res = mysqli_query($con, $check_admin);
+        if(mysqli_num_rows($res) > 0){
+            $fetch = mysqli_fetch_assoc($res);
+            $fetch_pass = $fetch['password'];
+            header('location: adminDashboard.php');
+            }else {
+                $errors['username'] = "Incorrect username or password";
+            } 
+        }
 ?>
