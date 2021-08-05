@@ -29,7 +29,7 @@ if(isset($_POST['signup'])){
         // $insert_data = "INSERT INTO CUSTOMER (citizenID, name, email, phone, password, code, status)
         //                 values('$citizenID', '$name', '$email', '$phone', '$encpass', '$code', '$status')";
         // Use Procedure for Signup Customer
-        $insert_data = "CALL signupCustomer('$citizenID','$name','$email','$phone','$encpass','$code','$stat')";
+        $insert_data = "CALL signupCustomer('$citizenID','$name','$email','$phone','$encpass','$code','$status')";
         $data_check = mysqli_query($con, $insert_data);
         if($data_check){
             $subject = "Email Verification Code";
@@ -86,7 +86,7 @@ if(isset($_POST['signup'])){
         $password = mysqli_real_escape_string($con, $_POST['password']);
         // $check_email = "SELECT * FROM CUSTOMER WHERE email = '$email'";
         // Use Procedure for Login Customer
-        $check_email = "CALL loginCustomer('$email')" ;
+        $check_email = "CALL loginCustomer('$email', '$password')" ;
         $res = mysqli_query($con, $check_email);
         if(mysqli_num_rows($res) > 0){
             $fetch = mysqli_fetch_assoc($res);
