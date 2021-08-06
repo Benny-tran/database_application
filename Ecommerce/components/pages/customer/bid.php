@@ -52,13 +52,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="auction.php">
                         <i class="fas fa-cubes"></i>
                         <span>Manage Auction</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="bid.php">
                         <i class="fas fa-gavel"></i>
                         <span>Bid History</span>
                     </a>
@@ -84,7 +84,7 @@
                 <div class="col-md-12">
                     <div class="container mt-5 mr-5">
                         <div class="row">
-                            <div class="mt-3 col-md-12 mb-3">
+                            <div class="mt-4 col-md-12 mb-4">
                                 <form style="margin:left; width:85% ">
                                     <input id="search_bar" type="text" placeholder="Search by Name, Code...."
                                         style="width:100%;display:block">
@@ -113,6 +113,7 @@
                                                 <th>Closed At</th>
                                                 <th>Seller Name</th>
                                                 <th>Transaction No</th>
+                                                <!-- auto increment -->
                                             </tr>
                                         </thead>
                                         <tbody>

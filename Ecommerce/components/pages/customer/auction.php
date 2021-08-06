@@ -53,13 +53,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="auction.php">
                         <i class="fas fa-cubes"></i>
                         <span>Manage Auction</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="bid.php">
                         <i class="fas fa-gavel"></i>
                         <span>Bid History</span>
                     </a>
@@ -85,14 +85,14 @@
                 <div class="col-md-12">
                     <div class="container mt-5 mr-5">
                         <div class="row">
-                            <div class="mt-4 col-md-10 mb-2">
+                            <div class="mt-4 col-md-10 mb-4">
                                 <form style="margin:left; width:85% ">
                                     <input id="search_bar" type="text" placeholder="Search by Name, Code...."
                                         style="width:100%;display:block">
                                     <!-- <i class="fa fa-search"></i> -->
                                 </form>
                             </div>
-                            <div class="mt-3 col-md-2 mb-3">
+                            <div class="mt-2 col-md-2 mb-1">
                                 <button class="btn"><i class="fa fa-filter"></i></button>
                             </div>
                             <!-- another modal or sidebar? -->
