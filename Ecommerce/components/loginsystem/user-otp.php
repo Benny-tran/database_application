@@ -1,7 +1,8 @@
 <?php require_once "loginController.php"; ?>
 <?php 
 $email = $_SESSION['email'];
-if($email == false){
+$phone = $_SESSION['phone'];
+if($email == false and $phone == false){
   header('Location: login-user.php');
 }
 ?>
@@ -19,6 +20,7 @@ if($email == false){
             <div class="col-md-4 offset-md-4 form">
                 <form action="user-otp.php" method="POST" autocomplete="off">
                     <h2 class="text-center">Code Verification</h2>
+                    <p class="text-center">Enter verification code = 0. If you login with phone number</p>
                     <?php 
                     if(isset($_SESSION['info'])){
                         ?>
@@ -41,6 +43,7 @@ if($email == false){
                         <?php
                     }
                     ?>
+                    <!-- <h3>Enter verification code = 0 if you login with phone number</h3> -->
                     <div class="form-group">
                         <input class="form-control" type="number" name="otp" placeholder="Enter verification code" required>
                     </div>

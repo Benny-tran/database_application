@@ -37,10 +37,11 @@ if(isset($_POST['signup'])){
             $sender = "From: auctionsystemrmit@gmail.com \r\n";
             $sender .= "MINE-Version: 1.0" . "\r\n";
             $sender .= "Content-Type: text/html; charset=UTF-8" . "\r\n"; 
-            if(mail($email, $subject, $message, $sender)){
+            if(mail($email, $phone, $subject, $message, $sender)){
                 $info = "We've sent a verification code to your email - $email";
                 $_SESSION['info'] = $info;
                 $_SESSION['email'] = $email;
+                $_SESSION['phone'] = $phone;
                 $_SESSION['password'] = $password;
                 header('location: user-otp.php');
                 exit();
@@ -63,6 +64,7 @@ if(isset($_POST['signup'])){
             $fetch_data = mysqli_fetch_assoc($code_res);
             $fetch_code = $fetch_data['code'];
             $email = $fetch_data['email'];
+            $phone = $fetch_data['phone'];
             $code = 0;
             $status = 'verified';
             $update_otp = "UPDATE CUSTOMER SET code = $code, status = '$status' WHERE code = $fetch_code";
@@ -70,6 +72,7 @@ if(isset($_POST['signup'])){
             if($update_res){
                 $_SESSION['name'] = $name;
                 $_SESSION['email'] = $email;
+                $_SESSION['phone'] = $phone;
                 header('location: home.php');
                 exit();
             }else{
@@ -83,19 +86,22 @@ if(isset($_POST['signup'])){
     //if user click login button
     if(isset($_POST['login'])){
         $email = mysqli_real_escape_string($con, $_POST['email']);
+        $phone = mysqli_real_escape_string($con, $_POST['email']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
-        // $check_email = "SELECT * FROM CUSTOMER WHERE email = '$email'";
+        // $check_email = "SELECT * FROM CUSTOMER WHERE email = '$email' and password = '$password'";
         // Use Procedure for Login Customer
-        $check_email = "CALL loginCustomer('$email', '$password')" ;
+        $check_email = "CALL loginCustomer('$email', '$phone', '$password')" ;
         $res = mysqli_query($con, $check_email);
         if(mysqli_num_rows($res) > 0){
             $fetch = mysqli_fetch_assoc($res);
             $fetch_pass = $fetch['password'];
             if(password_verify($password, $fetch_pass)){
                 $_SESSION['email'] = $email;
+                $_SESSION['phone'] = $phone;
                 $status = $fetch['status'];
                 if($status == 'verified'){
                   $_SESSION['email'] = $email;
+                  $_SESSION['phone'] = $phone;
                   $_SESSION['password'] = $password;
                     header('location: home.php');
                 }else{

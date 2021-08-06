@@ -34,7 +34,7 @@
                         <div class="input-group-append">
 							<span class="input_group_text"><i class="fas fa-key"></i></span>
 						</div>
-                        <input class="form-control" type="email" name="email" placeholder="Email Address" required value="<?php echo $email ?>">
+                        <input class="form-control" type="name" name="email" placeholder="Email Address" required value="<?php echo $email ?>">
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="password" name="password" placeholder="Password" required>
