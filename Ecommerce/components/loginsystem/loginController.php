@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require "db.php";
+require "dbLogin.php";
 $email = "";
 $name = "";
 $username = "";
