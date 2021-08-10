@@ -17,7 +17,7 @@
 
     <!-- Our Custom CSS -->
     <!-- <link rel="stylesheet" href="../layout/layout.css"> -->
-    <link rel='stylesheet' type='text/css' href='style.css' />
+    <link rel='stylesheet'  href='style.css' />
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
@@ -30,9 +30,7 @@
 </head>
 
 <body>
-    <?php include '../header/header.php' ?>
-
-    <?php include '../../layout/layout.php' ?>
+<?php include '../../header/header.php'; ?>
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
@@ -93,92 +91,11 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="container mr-5">
-                        <div class="row justify-content-center">
-                            <div class="mt-5 col-md-12 mb-5">
-                                <h2 class="heading-section">Bid History</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-wrap">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Original Price</th>
-                                                <th>Final Price</th>
-                                                <th>Closed At</th>
-                                                <th>Seller Name</th>
-                                                <th>Transaction No</th>
-                                                <!-- auto increment -->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Iphone</td>
-                                                <td>IP</td>
-                                                <td>$100</td>
-                                                <td>$1000</td>
-                                                <td>Date 2</td>
-                                                <td>Davie</td>
-                                                <td>1</td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>Headphone</td>
-                                                <td>H</td>
-                                                <td>$100</td>
-                                                <td>$350</td>
-                                                <td>Date 2</td>
-                                                <td>Jonas</td>
-                                                <td>2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Keyboard</td>
-                                                <td>K</td>
-                                                <td>$100</td>
-                                                <td>$550</td>
-                                                <td>Date 2</td>
-                                                <td>Chris</td>
-                                                <td>3</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Ipad</td>
-                                                <td>IPD</td>
-                                                <td>$100</td>
-                                                <td>$900</td>
-                                                <td>Date 2</td>
-                                                <td>Johnson</td>
-                                                <td>4</td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="w3-bar text-center mt-5">
-                            <a href="#" class="w3-button">&laquo;</a>
-                            <a href="#" class="w3-button">1</a>
-                            <a href="#" class="w3-button">2</a>
-                            <a href="#" class="w3-button">3</a>
-                            <a href="#" class="w3-button">4</a>
-                            <a href="#" class="w3-button">5</a>
-                            <a href="#" class="w3-button">&raquo;</a>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+                    
 
 
     <!-- page-wrapper -->
