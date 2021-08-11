@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="navigation">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="../customerShoppingCart/shoppingCart.php">
           <i class="fas fa-shopping-cart"></i>
               <span class="badge badge-info">1</span>
             </i>

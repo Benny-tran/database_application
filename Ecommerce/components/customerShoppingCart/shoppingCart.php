@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../customerManageAuction/auction.php">
                         <i class="fas fa-cubes"></i>
                         <span>Manage Auction</span>
                     </a>
