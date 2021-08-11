@@ -193,28 +193,8 @@
                                                         <div class="control__indicator"></div>
                                                     </label>
                                                 </th>
-                                                <td>Iphone</td>
-                                                <td>IP</td>
-                                                <td><a href="#" class="btn btn-primary">Active</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
+                                                
 
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Headphone</td>
-                                                <td>H</td>
-                                                <td><a href="#" class="btn btn-success">Completed</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
                                             </tr>
 
                                             <tr>
