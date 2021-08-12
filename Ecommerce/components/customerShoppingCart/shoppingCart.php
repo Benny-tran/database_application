@@ -30,7 +30,7 @@
             <div class="sidebar-header">
                 <div class="user-info">
                     <h3>John Doe</h3>
-                    <h5">Customer</h5>
+                    <h5>Customer</h5>
                 </div>
             </div>
         <!-- Sidebar Menu -->

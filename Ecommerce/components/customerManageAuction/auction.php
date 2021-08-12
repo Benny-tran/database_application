@@ -29,6 +29,7 @@
 </head>
 
 <body>
+<?php session_start(); ?>
     <?php include '../header/header.php' ?>
 
     <div class="wrapper">
@@ -36,8 +37,8 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <div class="user-info">
-                    <h3>John Doe</h3>
-                    <h5">Customer</h5>
+                    <h3>Welcome</h3>
+                    <h5><?php echo $fetch_info['name'] ?></h5>
                 </div>
             </div>
             <!-- Sidebar Menu -->
@@ -100,19 +101,30 @@
                             <div class="mt-5 col-md-9 mb-5">
                                 <h2 class="heading-section">Product Auction List</h2>
                             </div>
-
                             <div class="mt-5 col-md-3 mb-5">
                                 <button class="btn default" id="createAuction">Create Auction
                                     <i class="fa fa-pencil-alt"></i></button>
-
                             </div>
                         </div>
+                        <div class="text-center">
+                                    <?php
+                                        if(isset($_SESSION['status'])){
+                                            echo "<h5 class='alert alert-warning text-center'>".$_SESSION['status']."</h5>";
+                                            unset($_SESSION['status']);
+                                            
+                                        }
+                                    ?>
+                                </div>
                         <div id="createAuctionModal" class="modal">
                             <div class="modal-content">
-                            <form action="auction.php" method="post" autocomplete="">
+                            <form action="auctionController.php" method="POST" enctype="multipart/form-data" >
                                 <div class="modal-header">
                                         <h2>Create Auction Product</h2>
                                         <span class="close">&times;</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Citizen ID</label>
+                                    <input class="form-control" type="text" name="customerID" placeholder="Citizen ID" required value="<?php echo $customerID ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Product Name</label>
@@ -128,11 +140,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
-                                    <input class="form-control" type="file" name="productImageURL">
+                                    <input class="form-control" type="file" name="my_image" required value="<?php echo $new_img_name ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>End Time</label>
-                                    <input class="form-control" type="datetime-local" name="closeTime">
+                                    <input class="form-control" type="datetime-local" name="closeTime" required value="<?php echo $closeTime ?>">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary" name="createProduct">Create Auction</button>
