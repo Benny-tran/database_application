@@ -3,7 +3,10 @@ include_once('db.php');
 // $query='SELECT * FROM bidReport';
 // where bidderID = $citizenID group by bidderID
 // $result=mysqli_query($query);
-$query = mysqli_query($con, 'SELECT * FROM bidReport');
+// $citizenID = $_POST['customer'];
+$query = mysqli_query($con, "SELECT * FROM bidReport"); 
+// WHERE bidderID = '{$citizenID}'");
+
 // $result = mysqli_fetch_assoc($query);
 // $rows = $query -> fetch_row();
 ?>
@@ -97,7 +100,7 @@ $query = mysqli_query($con, 'SELECT * FROM bidReport');
                         </div>
                     </div>
 
-                    <div class="container mr-5">
+                    <div class="container">
                         <div class="row justify-content-center">
                             <div class="mt-5 col-md-12 mb-5">
                                 <h2 class="heading-section">Bid History/Report</h2>
@@ -132,18 +135,6 @@ $query = mysqli_query($con, 'SELECT * FROM bidReport');
                                             <?php
                                             }
                                             ?>
-
-                                            <!-- <tr>
-                                                <td>Iphone</td>
-                                                <td>IP</td>
-                                                <td>$100</td>
-                                                <td>$1000</td>
-                                                <td>Date 2</td>
-                                                <td>Davie</td>
-                                                <td>1</td>
-
-                                            </tr> -->
-
                                         </tbody>
                                     </table>
                                 </div>

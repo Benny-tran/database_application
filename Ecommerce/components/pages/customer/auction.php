@@ -99,7 +99,7 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
                         </div>
                     </div>
 
-                    <div class="container mr-5">
+                    <div class="container">
 
                         <div class="row justify-content-center">
                             <div class="mt-5 col-md-9 mb-5">
@@ -171,19 +171,19 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
                                 </form>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wrap">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <!-- <th scope="col">
+                                                <th scope="col">
                                                     <label class="control control--checkbox">
                                                         <input type="checkbox" class="js-check-all" />
                                                         <div class="control__indicator"></div>
                                                     </label>
-                                                </th> -->
+                                                </th>
                                                 <th>Product ID</th>
                                                 <th>Customer ID</th>
                                                 <th>Product Name</th>
@@ -201,12 +201,12 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
                                             while ($rows = mysqli_fetch_assoc($query)) {
                                             ?>
                                                 <tr>
-                                                    <!-- <th scope="row">
+                                                    <th scope="row">
                                                         <label class="control control--checkbox">
                                                             <input type="checkbox" />
                                                             <div class="control__indicator"></div>
                                                         </label>
-                                                    </th> -->
+                                                    </th>
                                                     <td><?php echo $rows['productID']; ?></td>
                                                     <td><?php echo $rows['customerID']; ?></td>
                                                     <td><?php echo $rows['productName']; ?></td>
@@ -221,21 +221,6 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
                                             <?php
                                             }
                                             ?>
-
-                                            <!-- <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Iphone</td>
-                                                <td>IP2</td>
-                                                <td><a href="#" class="btn btn-success">Completed</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
-                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
