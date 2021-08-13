@@ -4,7 +4,7 @@ include_once('db.php');
 // where bidderID = $citizenID group by bidderID
 // $result=mysqli_query($query);
 // $citizenID = $_POST['customer'];
-$query = mysqli_query($con, "SELECT * FROM bidReport"); 
+$query = mysqli_query($con, "SELECT * FROM bidReport");
 // WHERE bidderID = '{$citizenID}'");
 
 // $result = mysqli_fetch_assoc($query);
@@ -26,6 +26,7 @@ $query = mysqli_query($con, "SELECT * FROM bidReport");
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="css/datatable-bootstrap.min.css" media="screen">
 
     <!-- Our Custom CSS -->
     <!-- <link rel="stylesheet" href="../layout/layout.css"> -->
@@ -34,6 +35,13 @@ $query = mysqli_query($con, "SELECT * FROM bidReport");
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <!-- JS files -->
+    <script type="text/javascript" src="js/datatable.min.js"></script>
+
+    <!-- Add the following if you want to use the jQuery wrapper (you still need datatable.min.js): -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/datatable.jquery.min.js"></script>
 
 </head>
 
@@ -101,15 +109,17 @@ $query = mysqli_query($con, "SELECT * FROM bidReport");
                     </div>
 
                     <div class="container">
+
                         <div class="row justify-content-center">
                             <div class="mt-5 col-md-12 mb-5">
                                 <h2 class="heading-section">Bid History/Report</h2>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wrap">
-                                    <table class="table table-striped">
+                                    <table id="bid-table" class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Bid ID</th>
@@ -141,7 +151,7 @@ $query = mysqli_query($con, "SELECT * FROM bidReport");
                             </div>
                         </div>
 
-                        <div class="w3-bar text-center mt-5">
+                        <!-- <div class="w3-bar text-center mt-5">
                             <a href="#" class="w3-button">&laquo;</a>
                             <a href="#" class="w3-button">1</a>
                             <a href="#" class="w3-button">2</a>
@@ -149,8 +159,9 @@ $query = mysqli_query($con, "SELECT * FROM bidReport");
                             <a href="#" class="w3-button">4</a>
                             <a href="#" class="w3-button">5</a>
                             <a href="#" class="w3-button">&raquo;</a>
-                        </div>
+                        </div> -->
 
+                        <div id="paging-first-datatable"></div>
                     </div>
 
                 </div>
@@ -175,3 +186,16 @@ $query = mysqli_query($con, "SELECT * FROM bidReport");
 </body>
 
 </html>
+
+<script>
+    $('#bid-table table').datatable({
+        pageSize: 8,
+        // sort: [true, true, false],
+        // filters: [true, false, 'select'],
+        // filterText: 'Type to filter... ',
+        // onChange: function(old_page, new_page) {
+        //     console.log('changed from ' + old_page + ' to ' + new_page);
+        // }
+        pagingDivSelector: "#paging-first-datatable"
+    });
+</script>
