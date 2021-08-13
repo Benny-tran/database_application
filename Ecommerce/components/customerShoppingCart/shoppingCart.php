@@ -1,3 +1,23 @@
+<?php include "../loginsystem/loginController.php"; ?>
+<?php 
+$email = $_SESSION['email'];
+$password = $_SESSION['password'];
+if($email != false && $password != false){
+    $sql = "SELECT * FROM CUSTOMER WHERE email = '$email'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+        $status = $fetch_info['status'];
+        $code = $fetch_info['code'];
+        if($status == "verified"){
+        }else{
+            header('Location: login-user.php');
+        }
+    }
+}else{
+    header('Location: login-user.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -29,8 +49,8 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <div class="user-info">
-                    <h3>John Doe</h3>
-                    <h5>Customer</h5>
+                    <h3>Welcome</h3>
+                    <h5><?php echo $fetch_info['name'] ?></h5>
                 </div>
             </div>
         <!-- Sidebar Menu -->

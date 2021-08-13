@@ -5,6 +5,7 @@
         "cmnd",
         "cpassword",
         "encpass",
+        "loginsystem",
         "usermanager"
     ]
 }
