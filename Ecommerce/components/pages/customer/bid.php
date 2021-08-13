@@ -1,7 +1,11 @@
 <?php
-// include once('db.php');
-$query='select * from bidReport where bidderID = $citizenID group by bidderID';
-$result=mysqli_query($query);
+include_once('db.php');
+// $query='SELECT * FROM bidReport';
+// where bidderID = $citizenID group by bidderID
+// $result=mysqli_query($query);
+$query = mysqli_query($con, 'SELECT * FROM bidReport');
+// $result = mysqli_fetch_assoc($query);
+// $rows = $query -> fetch_row();
 ?>
 
 <!DOCTYPE html>
@@ -17,26 +21,22 @@ $result=mysqli_query($query);
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Our Custom CSS -->
     <!-- <link rel="stylesheet" href="../layout/layout.css"> -->
-    <link rel='stylesheet'  href='style.css' />
+    <link rel='stylesheet' href='style.css' />
 
     <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
-        crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
-        crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-<?php include '../../header/header.php' ?>
+    <?php include '../../header/header.php' ?>
+    <!-- layout is outdated -->
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
@@ -44,7 +44,7 @@ $result=mysqli_query($query);
             <div class="sidebar-header">
                 <div class="user-info">
                     <h3>John Doe</h3>
-                    <h5">Customer</h5>
+                    <h5>Customer</h5>
                 </div>
             </div>
             <!-- Sidebar Menu -->
@@ -90,8 +90,7 @@ $result=mysqli_query($query);
                         <div class="row">
                             <div class="mt-4 col-md-12 mb-4">
                                 <form style="margin:left; width:85% ">
-                                    <input id="search_bar" type="text" placeholder="Search by Name, Code...."
-                                        style="width:100%;display:block">
+                                    <input id="search_bar" type="text" placeholder="Search by Name, Code...." style="width:100%;display:block">
                                     <!-- <i class="fa fa-search"></i> -->
                                 </form>
                             </div>
@@ -110,39 +109,30 @@ $result=mysqli_query($query);
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <!-- <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Original Price</th>
-                                                <th>Final Price</th>
-                                                <th>Closed At</th>
-                                                <th>Seller Name</th> -->
-                                                <!-- <th>Transaction No</th> -->
                                                 <th>Bid ID</th>
                                                 <th>Product ID</th>
                                                 <th>Bidder ID</th>
                                                 <th>Bid Time</th>
                                                 <th>Bid Amount</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            while($row=mysqli_fetch_assoc($result))
-                                            {
+                                            while ($rows = mysqli_fetch_assoc($query)) {
                                             ?>
 
-                                            <tr>
-                                            <td><?php echo $rows['bidID'] ;?></td>
-                                            <td><?php echo $rows['productID'] ;?></td>
-                                            <td><?php echo $rows['bidderID'] ;?></td>
-                                            <td><?php echo $rows['bidDateTime'] ;?></td>
-                                            <td><?php echo $rows['bidamount'] ;?></td>
-                                            </tr>
+                                                <tr>
+                                                    <td><?php echo $rows['bidID']; ?></td>
+                                                    <td><?php echo $rows['productID']; ?></td>
+                                                    <td><?php echo $rows['bidderID']; ?></td>
+                                                    <td><?php echo $rows['bidDateTime']; ?></td>
+                                                    <td><?php echo $rows['bidamount']; ?></td>
+                                                </tr>
 
                                             <?php
                                             }
-                                            ?>                               
-      
+                                            ?>
+
                                             <!-- <tr>
                                                 <td>Iphone</td>
                                                 <td>IP</td>
@@ -176,30 +166,20 @@ $result=mysqli_query($query);
             </div>
         </div>
     </div>
-                    
+
 
 
     <!-- page-wrapper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 </body>
 

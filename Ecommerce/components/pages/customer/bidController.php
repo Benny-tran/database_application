@@ -1,3 +1,5 @@
+<!-- NO NEED THIS FILE -->
+
 <?php
 // require "db.php";
 

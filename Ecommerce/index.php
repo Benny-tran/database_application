@@ -10,6 +10,11 @@
 <div class="container">
   <h1>My First Bootstrap Page</h1>
   <p>This is some text.</p> 
+
+  <a href='../Ecommerce/components/pages/customer/auction.php'>Auction</a>
+  <br/>
+  <a href='../Ecommerce/components/pages/customer/bid.php'>Bid</a>
+
 </div>
 </body>
 </html>

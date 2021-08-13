@@ -1,3 +1,5 @@
+<!-- NO NEED THIS FILE -->
+
 <?php
 // session_start();
 // require "db.php";
