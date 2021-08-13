@@ -1,3 +1,9 @@
+<?php
+// include once('db.php');
+$query='select * from bidReport where bidderID = $citizenID group by bidderID';
+$result=mysqli_query($query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,16 +110,39 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
+                                                <!-- <th>Name</th>
                                                 <th>Code</th>
                                                 <th>Original Price</th>
                                                 <th>Final Price</th>
                                                 <th>Closed At</th>
-                                                <th>Seller Name</th>
+                                                <th>Seller Name</th> -->
                                                 <!-- <th>Transaction No</th> -->
+                                                <th>Bid ID</th>
+                                                <th>Product ID</th>
+                                                <th>Bidder ID</th>
+                                                <th>Bid Time</th>
+                                                <th>Bid Amount</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                            while($row=mysqli_fetch_assoc($result))
+                                            {
+                                            ?>
+
+                                            <tr>
+                                            <td><?php echo $rows['bidID'] ;?></td>
+                                            <td><?php echo $rows['productID'] ;?></td>
+                                            <td><?php echo $rows['bidderID'] ;?></td>
+                                            <td><?php echo $rows['bidDateTime'] ;?></td>
+                                            <td><?php echo $rows['bidamount'] ;?></td>
+                                            </tr>
+
+                                            <?php
+                                            }
+                                            ?>                               
+      
                                             <!-- <tr>
                                                 <td>Iphone</td>
                                                 <td>IP</td>
@@ -123,16 +152,6 @@
                                                 <td>Davie</td>
                                                 <td>1</td>
 
-                                            </tr>
-
-                                            <tr>
-                                                <td>Headphone</td>
-                                                <td>H</td>
-                                                <td>$100</td>
-                                                <td>$350</td>
-                                                <td>Date 2</td>
-                                                <td>Jonas</td>
-                                                <td>2</td>
                                             </tr> -->
 
                                         </tbody>

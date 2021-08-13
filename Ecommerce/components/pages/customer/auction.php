@@ -1,3 +1,9 @@
+<?php
+// include_once('db.php');
+$query='select * from auctionProduct';
+$result=mysqli_query($query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -177,57 +183,46 @@
                                                         <div class="control__indicator"></div>
                                                     </label>
                                                 </th>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Status</th>
+                                                <th>Product ID</th>
+                                                <th>Customer ID</th>
+                                                <th>Product Name</th>
+                                                <th>Description</th>          
                                                 <th>Original Price</th>
+                                                <th>Maximum Price</th>
+                                                <th>Image</th>
+                                                <th>Status</th>
                                                 <th>Created At</th>
                                                 <th>Closed At</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                            while($row=mysqli_fetch_assoc($result))
+                                            {
+                                            ?>
                                             <tr>
                                                 <th scope="row">
                                                     <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
+                                                    <input type="checkbox" />
+                                                    <div class="control__indicator"></div>
                                                     </label>
                                                 </th>
-                                                
-
+                                                <td><?php echo $rows['productID'] ;?></td>
+                                                <td><?php echo $rows['customerID'] ;?></td>
+                                                <td><?php echo $rows['productName'] ;?></td>
+                                                <td><?php echo $rows['description'] ;?></td>
+                                                <td><?php echo $rows['startingPrice'] ;?></td>
+                                                <td><?php echo $rows['maximumPrice'] ;?></td>
+                                                <td><?php echo $rows['productImageURL'] ;?></td>
+                                                <td><?php echo $rows['status'] ;?></td>
+                                                <td><?php echo $rows['createTime'] ;?></td>
+                                                <td><?php echo $rows['closeTime'] ;?></td>
                                             </tr>
-
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Keyboard</td>
-                                                <td>K</td>
-                                                <td><a href="#" class="btn btn-primary">Active</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Ipad</td>
-                                                <td>IPD</td>
-                                                <td><a href="#" class="btn btn-primary">Active</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
-                                            </tr>
-
-                                            <tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        
+                                            <!-- <tr>
                                                 <th scope="row">
                                                     <label class="control control--checkbox">
                                                         <input type="checkbox" />
@@ -240,9 +235,7 @@
                                                 <td>$100</td>
                                                 <td>Date 1</td>
                                                 <td>Date 2</td>
-                                            </tr>
-
-
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
