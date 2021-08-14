@@ -16,7 +16,7 @@
             <div class="col-md-4 offset-md-4 form login-form">
                 <form action="login-user.php" method="POST" autocomplete="">
                     <h2 class="text-center">Login Form</h2>
-                    <p class="text-center">Login with your email and password.</p>
+                    <p class="text-center">Login with your email or phone number</p></p>
                     <?php
                     if(count($errors) > 0){
                         ?>

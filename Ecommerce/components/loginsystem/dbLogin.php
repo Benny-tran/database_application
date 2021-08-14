@@ -4,6 +4,7 @@ try{
     //place code here that could potentially throw an exception
     $con = mysqli_connect('localhost', 'loginManager', '12345', 'assessment');
 
+   //  echo 'connect success';
  }
  catch(Exception $e)
  {
