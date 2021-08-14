@@ -4,6 +4,32 @@ include_once('db.php');
 // $result = mysqli_query($query);
 $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
 // $result = mysqli_fetch_assoc($query);
+// function resize_image($file, $w, $h, $crop=FALSE) {
+//     list($width, $height) = getimagesize($file);
+//     $r = $width / $height;
+//     if ($crop) {
+//         if ($width > $height) {
+//             $width = ceil($width-($width*abs($r-$w/$h)));
+//         } else {
+//             $height = ceil($height-($height*abs($r-$w/$h)));
+//         }
+//         $newwidth = $w;
+//         $newheight = $h;
+//     } else {
+//         if ($w/$h > $r) {
+//             $newwidth = $h*$r;
+//             $newheight = $h;
+//         } else {
+//             $newheight = $w/$r;
+//             $newwidth = $w;
+//         }
+//     }
+//     $src = imagecreatefrompng($file);
+//     $dst = imagecreatetruecolor($newwidth, $newheight);
+//     imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+//     return $dst;
+// }
 ?>
 
 <!DOCTYPE html>
@@ -127,15 +153,15 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
                                                         <div class="control__indicator"></div>
                                                     </label>
                                                 </th>
-                                                <th>Product ID</th>
-                                                <th>Customer ID</th>
+                                                <!-- <th>Product ID</th> -->
+                                                <!-- <th>Customer ID</th> -->
                                                 <th>Product Name</th>
-                                                <th>Description</th>
+                                                <!-- <th>Description</th> -->
                                                 <th>Original Price</th>
                                                 <th>Maximum Price</th>
                                                 <th>Image</th>
                                                 <th>Status</th>
-                                                <th>Created At</th>
+                                                <!-- <th>Created At</th> -->
                                                 <th>Closed At</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -151,27 +177,30 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
                                                             <div class="control__indicator"></div>
                                                         </label>
                                                     </th>
-                                                    <td><?php echo $rows['productID']; ?></td>
-                                                    <td><?php echo $rows['customerID']; ?></td>
                                                     <td><?php echo $rows['productName']; ?></td>
-                                                    <td><?php echo $rows['description']; ?></td>
                                                     <td><?php echo $rows['startingPrice']; ?></td>
                                                     <td><?php echo $rows['maximumPrice']; ?></td>
-                                                    <td><?php echo $rows['productImageURL']; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        $imageURL = '../../customerManageAuction/uploads/' . $rows['productImageURL'];
+                                                        // $newImage = resize_image($imageURL, 150, 150);
+                                                        // force resize image 
+                                                        ?>
+                                                        <img src="<?php echo $imageURL; ?>" alt="" />
+                                                    </td>
                                                     <td><?php echo $rows['status']; ?></td>
-                                                    <td><?php echo $rows['createTime']; ?></td>
                                                     <td><?php echo $rows['closeTime']; ?></td>
                                                     <td>
-                                                        <?php if($rows['status']=='completed'){
+                                                        <?php if ($rows['status'] == 'completed') {
                                                             echo "Edit Delete";
                                                         } ?>
                                                         <!-- echo buttons how -->
-                                                            
-                                                        <?php if($rows['status']=='active') {
+
+                                                        <?php if ($rows['status'] == 'active') {
                                                             echo "Ongoing auction";
                                                         }
                                                         ?>
-                                                                                                             
+
                                                     </td>
                                                 </tr>
                                             <?php
@@ -182,6 +211,8 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
                                 </div>
                             </div>
                         </div>
+
+                        <!-- pagination -->
 
                         <!-- <div class="w3-bar text-center mt-5">
                             <a href="#" class="w3-button">&laquo;</a>
@@ -255,5 +286,32 @@ $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
         if (event.target == modal) {
             modal.style.display = "none";
         }
+    }
+   
+    function resize_image($file, $w, $h, $crop = FALSE) {
+        list($width, $height) = getimagesize($file);
+        $r = $width / $height;
+        if ($crop) {
+            if ($width > $height) {
+                $width = ceil($width - ($width * abs($r - $w / $h)));
+            } else {
+                $height = ceil($height - ($height * abs($r - $w / $h)));
+            }
+            $newwidth = $w;
+            $newheight = $h;
+        } else {
+            if ($w / $h > $r) {
+                $newwidth = $h * $r;
+                $newheight = $h;
+            } else {
+                $newheight = $w / $r;
+                $newwidth = $w;
+            }
+        }
+        $src = imagecreatefromjpeg($file);
+        $dst = imagecreatetruecolor($newwidth, $newheight);
+        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+        return $dst;
     }
 </script>
