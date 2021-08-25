@@ -1,21 +1,18 @@
 <?php include "../loginsystem/loginController.php"; ?>
 <?php 
 $email = $_SESSION['email'];
+$phone = $_SESSION['email'];
 $password = $_SESSION['password'];
 if($email != false && $password != false){
-    $sql = "SELECT * FROM CUSTOMER WHERE email = '$email'";
+    $sql = "SELECT * FROM CUSTOMER WHERE email = '$email' or phone = '$phone'";
     $run_Sql = mysqli_query($con, $sql);
     if($run_Sql){
         $fetch_info = mysqli_fetch_assoc($run_Sql);
         $status = $fetch_info['status'];
         $code = $fetch_info['code'];
-        if($status == "verified"){
-        }else{
-            header('Location: login-user.php');
-        }
     }
 }else{
-    header('Location: login-user.php');
+    header('Location: ../loginSystem/login-user.php');
 }
 ?>
 <!DOCTYPE html>

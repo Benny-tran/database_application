@@ -3,8 +3,10 @@
         "auctioncontroller",
         "auctionproduct",
         "cmnd",
+        "codeigniter",
         "cpassword",
         "encpass",
+        "laravel",
         "loginsystem",
         "usermanager"
     ]

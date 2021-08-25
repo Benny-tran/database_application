@@ -49,6 +49,7 @@ if(isset($_POST['signup'])){
                 $errors['otp-error'] = "Failed while sending code!";
             }
         }else{
+            echo $errors;
             $errors['db-error'] = "This information may exist in the system. Please try again!";
         }
     }
@@ -73,7 +74,7 @@ if(isset($_POST['signup'])){
                 $_SESSION['name'] = $name;
                 $_SESSION['email'] = $email;
                 $_SESSION['phone'] = $phone;
-                header('location: home.php');
+                header('location: ../customerShoppingCart/shoppingCart.php');
                 exit();
             }else{
                 $errors['otp-error'] = "Failed while updating code!";
