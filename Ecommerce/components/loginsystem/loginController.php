@@ -104,7 +104,7 @@ if(isset($_POST['signup'])){
                   $_SESSION['email'] = $email;
                   $_SESSION['phone'] = $phone;
                   $_SESSION['password'] = $password;
-                    header('location: ../customerShoppingCart/shoppingCart.php');
+                    header('location: ../customerManageAuction/auction.php');
                 }else{
                     $info = "It's look like you haven't still verify your email - $email";
                     $_SESSION['info'] = $info;
