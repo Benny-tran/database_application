@@ -12,7 +12,7 @@ if($email != false && $password != false){
         $code = $fetch_info['code'];
     }
 }else{
-    header('Location: ../loginSystem/login-user.php');
+    // header('Location: ../loginSystem/login-user.php');
 }
 ?>
 <!DOCTYPE html>
@@ -73,7 +73,7 @@ if($email != false && $password != false){
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../customerBidHistory/bid.php">
                         <i class="fas fa-gavel"></i>
                         <span>Bid History</span>
                     </a>

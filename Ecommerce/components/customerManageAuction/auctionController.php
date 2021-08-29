@@ -11,6 +11,7 @@ if (isset($_POST['createProduct'])) {
     $startingPrice = $_POST['startingPrice'];
     $my_image = $_FILES['my_image'];
     $closeTime = $_POST['closeTime'];
+    $field_values_array = $_POST['field_name'];
     
     $img_name = $_FILES['my_image']['name'];
     $img_size = $_FILES['my_image']['size'];

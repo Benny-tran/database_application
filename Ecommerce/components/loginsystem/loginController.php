@@ -74,7 +74,7 @@ if(isset($_POST['signup'])){
                 $_SESSION['name'] = $name;
                 $_SESSION['email'] = $email;
                 $_SESSION['phone'] = $phone;
-                header('location: ../customerShoppingCart/shoppingCart.php');
+                header('location: ../customerManageAuction/auction.php');
                 exit();
             }else{
                 $errors['otp-error'] = "Failed while updating code!";
