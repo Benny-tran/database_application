@@ -108,11 +108,12 @@ if($email != false && $password != false){
         <div id="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="container mt-5 mr-5">
+                    <div class="container mt-5">
                         <div class="row">
                             <div class="mt-4 col-md-12 mb-4">
                                 <form style="margin:left; width:85% ">
-                                    <input id="search_bar" type="text" placeholder="Search by Name, Code...." style="width:100%;display:block">
+                                    <input id="search_bar" type="text" placeholder="Search by Name, Code...." 
+                                    style="width:100%;display:block">
                                     <!-- <i class="fa fa-search"></i> -->
                                 </form>
                             </div>
@@ -121,8 +122,8 @@ if($email != false && $password != false){
 
                     <div class="container">
 
-                        <div class="row justify-content-center">
-                            <div class="mt-5 col-md-12 mb-5">
+                        <div class="row">
+                            <div class="mt-5 col-md-9 mb-5">
                                 <h2 class="heading-section">Bid History/Report</h2>
                             </div>
                         </div>

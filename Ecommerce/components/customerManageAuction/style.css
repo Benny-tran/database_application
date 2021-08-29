@@ -1,3 +1,4 @@
+
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
@@ -37,15 +38,13 @@ a, a:hover, a:focus {
   width: 100%;
   align-items: stretch;
   perspective: 1500px;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0%;
+  
 }
 
 /* Sidebar */
 #sidebar {
   margin-top: 52px;
-  width: 25%;
+  width: 20%;
   height: 950px;
   min-width: 250px;
   background: #343a40;
@@ -189,12 +188,19 @@ border-radius: 4px;
 
 .modal-body {padding: 16px 16px;}
 
-.input-box a {
-  color: red;
-  font-size: 13px;
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
   text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
 }
 
-.input-box a:hover {
-  text-decoration: underline;
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
 }
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
