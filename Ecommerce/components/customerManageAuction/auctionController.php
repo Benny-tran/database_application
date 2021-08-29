@@ -67,4 +67,20 @@ if (isset($_POST['createProduct'])) {
     header("Location: auction.php");
 }
 
+// DELETE DATA
+if(isset($_GET['deleteAuction'])){
+    $productID = $_GET['delete'];
+    $sql_delete = "DELETE FROM AUCTIONPRODUCT where productID = $productID";
+    $result = mysqli_query($con,$sql_delete);
+    if(mysqli_affected_rows($result)>0){
+      header('auction.php?result=success');
+      } else {
+         header('auction.php?result=fail');
+      }
+    }
+else {
+    header("Location: auction.php");
+}
+
 ?>
+

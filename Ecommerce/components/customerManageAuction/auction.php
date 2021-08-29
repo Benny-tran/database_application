@@ -223,7 +223,7 @@ $currentTime = strtotime("now");
                                         <thead>
                                             <tr>
                                                 <!-- <th style="width:5%">Product ID</th> -->
-                                                <!-- <th>Customer ID</th> -->
+                                                <!-- <th>Product ID</th> -->
                                                 <th style="width:10%">Product Name</th>
                                                 <th style="width:10%">Description</th>
                                                 <th style="width:10%">Original Price</th>
@@ -263,18 +263,14 @@ $currentTime = strtotime("now");
                                                     <td>
                                                         <?php if ($rows['status'] == 'active') { ?>
                                                             <html>
-
-                                                            <button class='btn btn-warning modalBtn' id="editAuction" href='#editAuctionModal'>Edit</button>
-
-                                                            
-
+                                                            <a class='btn btn-warning modalBtn' id="editAuction" href='#editAuctionModal'>Edit</a>
                                                             </html>
                                                         <?php } ?>
 
                                                         <?php if ($rows['status'] == 'completed') { ?>
                                                             <html>
-                                                                <button class='btn btn-danger' onclick="return confirm('Are you sure you want to delete this entry?')" 
-                                                                href="auction.php?delete=<?php echo $row['productID']; ?>" id="deleteAuction"
+                                                                <a href="auctionController.php?delete=<?php echo $rows['productID'];?>" id="deleteAuction"
+                                                                class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')" 
                                                                 >Delete</button>
                                                             </html>
                                                         <?php } ?>
