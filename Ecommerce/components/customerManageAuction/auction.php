@@ -14,6 +14,39 @@ if($email != false && $password != false){
 }else{
     header('Location: ../loginSystem/login-user.php');
 }
+// Display all the Product Auction List
+// $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
+
+function resize_image($file, $w, $h, $crop = FALSE)
+{
+    list($width, $height) = getimagesize($file);
+    $r = $width / $height;
+    if ($crop) {
+        if ($width > $height) {
+            $width = ceil($width - ($width * abs($r - $w / $h)));
+        } else {
+            $height = ceil($height - ($height * abs($r - $w / $h)));
+        }
+        $newwidth = $w;
+        $newheight = $h;
+    } else {
+        if ($w / $h > $r) {
+            $newwidth = $h * $r;
+            $newheight = $h;
+        } else {
+            $newheight = $w / $r;
+            $newwidth = $w;
+        }
+    }
+    $src = imagecreatefrompng($file);
+    $dst = imagecreatetruecolor($w, $h);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+    return $dst;
+}
+// $date = new DateTime();
+// $date->getTImestamp();
+$currentTime = strtotime("now");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +106,7 @@ if($email != false && $password != false){
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../customerBidHistory/bid.php">
                         <i class="fas fa-gavel"></i>
                         <span>Bid History</span>
                     </a>
@@ -97,7 +130,7 @@ if($email != false && $password != false){
         <div id="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="container mt-5 mr-5">
+                    <div class="container mt-5">
                         <div class="row">
                             <div class="mt-4 col-md-10 mb-4">
                                 <form style="margin:left; width:85% ">
@@ -113,7 +146,7 @@ if($email != false && $password != false){
                         </div>
                     </div>
 
-                    <div class="container mr-5">
+                    <div class="container">
                         <div class="row justify-content-center">
                             <div class="mt-5 col-md-9 mb-5">
                                 <h2 class="heading-section">Product Auction List</h2>
@@ -132,6 +165,19 @@ if($email != false && $password != false){
                                         }
                                     ?>
                                 </div>
+                                <!-- Display message alert base on different status -->
+                                <?php
+
+                            if(isset($_SESSION['message'])): ?>
+
+                                <div class="alert alert-<?=$_SESSION['msg_type']?>">
+
+                                    <?php
+                                        echo $_SESSION['message'];
+                                        unset($_SESSION['message']);
+                                    ?>
+                                </div>
+                            <?php endif ?>
                         <div id="createAuctionModal" class="modal">
                             <div class="modal-content">
                             <form action="auctionController.php" method="POST" enctype="multipart/form-data" >
@@ -169,118 +215,110 @@ if($email != false && $password != false){
                                 </form>
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <select class="form-control" name="state" id="maxRows">
+                                <option value="5000">Show ALL Rows</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="70">70</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <!-- READ data from Database-->
+                        <?php
+                            $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
+                            $result = $mysqli->query("SELECT * from AUCTIONPRODUCT") or die($mysqli->error);
+                        ?>
+                        <!-- Auction Table -->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wrap">
-                                    <table class="table table-striped">
+                                    <table id="auction-table" class="table table-bordered table-striped display">
                                         <thead>
                                             <tr>
-                                                <th scope="col">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" class="js-check-all" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Status</th>
-                                                <th>Original Price</th>
-                                                <th>Created At</th>
-                                                <th>Closed At</th>
+                                                <!-- <th style="width:5%">Product ID</th> -->
+                                                <!-- <th>Product ID</th> -->
+                                                <th style="width:10%">Product Name</th>
+                                                <th style="width:10%">Description</th>
+                                                <th style="width:10%">Original Price</th>
+                                                <th style="width:25%">Image</th>
+                                                <th style="width:10%">Status</th>
+                                                <!-- <th>Created At</th> -->
+                                                <th style="width:10%">Closed At</th>
+                                                <th style="width:10%">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Iphone</td>
-                                                <td>IP</td>
-                                                <td><a href="#" class="btn btn-primary">Active</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
+                                            <?php
+                                            while ($rows = $result->fetch_assoc()): 
+                                            ?>
+                                                <tr>
+                                                    <!-- <td><?php echo $rows['productID']; ?></td> -->
+                                                    <td><?php echo $rows['productName']; ?></td>
+                                                    <td><?php echo $rows['descriptionProduct']; ?></td>
+                                                    <td><?php echo $rows['startingPrice']; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        $imageURL = 'uploads/' . $rows['productImageURL'];
+                                                        $img = resize_image($imageURL, 100, 100);
+                                                        ?>
+                                                        <img src="<?php echo $imageURL; ?>" alt="" />
+                                                        <!-- resize image -->
+                                                    </td>
+                                                    <td><?php
+                                                        //    check for current time
+                                                        $closeTime = strtotime($rows['closeTime']);
+                                                        if ($currentTime > $closeTime) {
+                                                            $rows['status'] = 'completed';
+                                                        }
+                                                        echo $rows['status'];
+                                                        ?></td>
+                                                    <td><?php echo $rows['closeTime']; ?></td>
+                                                    <td>
+                                                        <?php if ($rows['status'] == 'active') { ?>
+                                                            <html>
+                                                            <a class='btn btn-warning modalBtn' id="editAuction" href='#editAuctionModal'>Edit</a>
+                                                            </html>
+                                                        <?php } ?>
 
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Headphone</td>
-                                                <td>H</td>
-                                                <td><a href="#" class="btn btn-success">Completed</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Keyboard</td>
-                                                <td>K</td>
-                                                <td><a href="#" class="btn btn-primary">Active</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Ipad</td>
-                                                <td>IPD</td>
-                                                <td><a href="#" class="btn btn-primary">Active</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="control control--checkbox">
-                                                        <input type="checkbox" />
-                                                        <div class="control__indicator"></div>
-                                                    </label>
-                                                </th>
-                                                <td>Iphone</td>
-                                                <td>IP2</td>
-                                                <td><a href="#" class="btn btn-success">Completed</a></td>
-                                                <td>$100</td>
-                                                <td>Date 1</td>
-                                                <td>Date 2</td>
-                                            </tr>
-
-
+                                                        <?php if ($rows['status'] == 'completed') { ?>
+                                                            <html>
+                                                                <a href='auctionController.php?delete=<?php echo $rows['productID']; ?>' 
+                                                                class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')" 
+                                                                >Delete</button>
+                                                            </html>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endwhile; ?>
                                         </tbody>
                                     </table>
+
+                                    <!--		Start Pagination -->
+                                    <div class='pagination-container'>
+                                        <nav>
+                                            <ul class="pagination">
+
+                                                <li data-page="prev">
+                                                    <span>
+                                                        < <span class="sr-only">(current)
+                                                    </span></span>
+                                                </li>
+                                                <!--	Here the JS Function Will Add the Rows -->
+                                                <li data-page="next" id="prev">
+                                                    <span> > <span class="sr-only">(current)</span></span>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!-- css doesnt work?  -->
+
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="w3-bar text-center mt-5">
-                            <a href="#" class="w3-button">&laquo;</a>
-                            <a href="#" class="w3-button">1</a>
-                            <a href="#" class="w3-button">2</a>
-                            <a href="#" class="w3-button">3</a>
-                            <a href="#" class="w3-button">4</a>
-                            <a href="#" class="w3-button">5</a>
-                            <a href="#" class="w3-button">&raquo;</a>
                         </div>
 
                     </div>
@@ -356,5 +394,150 @@ if($email != false && $password != false){
             modal.style.display = "none";
         }
     }
+
+    // pagination script 
+
+    getPagination('#auction-table');
+    //getPagination('.table-class');
+    //getPagination('table');
+
+    function getPagination(table) {
+        var lastPage = 1;
+
+        $('#maxRows')
+            .on('change', function(evt) {
+                //$('.paginationprev').html('');						// reset pagination
+
+                lastPage = 1;
+                $('.pagination')
+                    .find('li')
+                    .slice(1, -1)
+                    .remove();
+                var trnum = 0; // reset tr counter
+                var maxRows = parseInt($(this).val()); // get Max Rows from select option
+
+                if (maxRows == 5000) {
+                    $('.pagination').hide();
+                } else {
+                    $('.pagination').show();
+                }
+
+                var totalRows = $(table + ' tbody tr').length; // numbers of rows
+                $(table + ' tr:gt(0)').each(function() {
+                    // each TR in  table and not the header
+                    trnum++; // Start Counter
+                    if (trnum > maxRows) {
+                        // if tr number gt maxRows
+
+                        $(this).hide(); // fade it out
+                    }
+                    if (trnum <= maxRows) {
+                        $(this).show();
+                    } // else fade in Important in case if it ..
+                }); //  was fade out to fade it in
+                if (totalRows > maxRows) {
+                    // if tr total rows gt max rows option
+                    var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+                    //	numbers of pages
+                    for (var i = 1; i <= pagenum;) {
+                        // for each page append pagination li
+                        $('.pagination #prev')
+                            .before(
+                                '<li data-page="' +
+                                i +
+                                '">\
+                                <span>' +
+                                i++ +
+                                '<span class="sr-only">(current)</span></span>\
+                                </li>'
+                            )
+                            .show();
+                    } // end for i
+                } // end if row count > max rows
+                $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
+                $('.pagination li').on('click', function(evt) {
+                    // on click each page
+                    evt.stopImmediatePropagation();
+                    evt.preventDefault();
+                    var pageNum = $(this).attr('data-page'); // get it's number
+
+                    var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
+
+                    if (pageNum == 'prev') {
+                        if (lastPage == 1) {
+                            return;
+                        }
+                        pageNum = --lastPage;
+                    }
+                    if (pageNum == 'next') {
+                        if (lastPage == $('.pagination li').length - 2) {
+                            return;
+                        }
+                        pageNum = ++lastPage;
+                    }
+
+                    lastPage = pageNum;
+                    var trIndex = 0; // reset tr counter
+                    $('.pagination li').removeClass('active'); // remove active class from all li
+                    $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
+                    // $(this).addClass('active');					// add active class to the clicked
+                    limitPagging();
+                    $(table + ' tr:gt(0)').each(function() {
+                        // each tr in table not the header
+                        trIndex++; // tr index counter
+                        // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+                        if (
+                            trIndex > maxRows * pageNum ||
+                            trIndex <= maxRows * pageNum - maxRows
+                        ) {
+                            $(this).hide();
+                        } else {
+                            $(this).show();
+                        } //else fade in
+                    }); // end of for each tr in table
+                }); // end of on click pagination list
+                limitPagging();
+            })
+            .val(10)
+            // how many rows shown at once
+            .change();
+
+        // end of on select change
+
+        // END OF PAGINATION
+    }
+
+    function limitPagging() {
+        // alert($('.pagination li').length)
+
+        if ($('.pagination li').length > 7) {
+            if ($('.pagination li.active').attr('data-page') <= 3) {
+                $('.pagination li:gt(5)').hide();
+                $('.pagination li:lt(5)').show();
+                $('.pagination [data-page="next"]').show();
+            }
+            if ($('.pagination li.active').attr('data-page') > 3) {
+                $('.pagination li:gt(0)').hide();
+                $('.pagination [data-page="next"]').show();
+                for (let i = (parseInt($('.pagination li.active').attr('data-page')) - 2); i <= (parseInt($('.pagination li.active').attr('data-page')) + 2); i++) {
+                    $('.pagination [data-page="' + i + '"]').show();
+
+                }
+
+            }
+        }
+    }
+
+    $(function() {
+        // Just to append id number for each row
+        $('table tr:eq(0)').prepend('<th> ID </th>');
+
+        var id = 0;
+
+        $('table tr:gt(0)').each(function() {
+            id++;
+            $(this).prepend('<td>' + id + '</td>');
+        });
+    });
 
 </script>

@@ -2,6 +2,7 @@
 session_start();
 include('dbAuction.php');
 
+
 if (isset($_POST['createProduct'])) {
     $customerID = $_POST['customerID'];
     $check_customerID = "SELECT * FROM CUSTOMER WHERE citizenID = '$customerID'";
@@ -11,6 +12,7 @@ if (isset($_POST['createProduct'])) {
     $startingPrice = $_POST['startingPrice'];
     $my_image = $_FILES['my_image'];
     $closeTime = $_POST['closeTime'];
+    $field_values_array = $_POST['field_name'];
     
     $img_name = $_FILES['my_image']['name'];
     $img_size = $_FILES['my_image']['size'];
@@ -66,4 +68,21 @@ if (isset($_POST['createProduct'])) {
     header("Location: auction.php");
 }
 
+// DELETE DATA
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $sql_delete = "DELETE FROM auctionProduct where productID = $id";
+    $result = mysqli_query($con,$sql_delete);
+    if(mysqli_affected_rows($result)>0){
+    $_SESSION['status'] = "Data Deleted Fail";
+      header('auction.php?result=fail');
+      } else {
+        $_SESSION['status'] = "Data Deleted Successfully";
+        header('auction.php?result=success');
+      }
+    }
+else {
+    header("Location: auction.php");
+}
 ?>
+

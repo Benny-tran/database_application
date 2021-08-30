@@ -20,17 +20,6 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon navbar-kebab"></span>
   </button>
-    <div class="collapse navbar-collapse" id="navigation">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="../customerShoppingCart/shoppingCart.php">
-          <i class="fas fa-shopping-cart"></i>
-              <span class="badge badge-info">1</span>
-            </i>
-          </a>
-        </li>
-      </ul>
-    </div>
   </div>
 </nav>
 </body>
