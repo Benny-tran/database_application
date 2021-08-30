@@ -74,9 +74,11 @@ if(isset($_GET['delete'])){
     $sql_delete = "DELETE FROM auctionProduct where productID = $id";
     $result = mysqli_query($con,$sql_delete);
     if(mysqli_affected_rows($result)>0){
-      header('auction.php?result=success');
+    $_SESSION['status'] = "Data Deleted Fail";
+      header('auction.php?result=fail');
       } else {
-         header('auction.php?result=fail');
+        $_SESSION['status'] = "Data Deleted Successfully";
+        header('auction.php?result=success');
       }
     }
 else {
