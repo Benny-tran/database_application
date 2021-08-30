@@ -2,6 +2,7 @@
 session_start();
 include('dbAuction.php');
 
+
 if (isset($_POST['createProduct'])) {
     $customerID = $_POST['customerID'];
     $check_customerID = "SELECT * FROM CUSTOMER WHERE citizenID = '$customerID'";
@@ -68,9 +69,9 @@ if (isset($_POST['createProduct'])) {
 }
 
 // DELETE DATA
-if(isset($_GET['deleteAuction'])){
-    $productID = $_GET['delete'];
-    $sql_delete = "DELETE FROM AUCTIONPRODUCT where productID = $productID";
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $sql_delete = "DELETE FROM auctionProduct where productID = $id";
     $result = mysqli_query($con,$sql_delete);
     if(mysqli_affected_rows($result)>0){
       header('auction.php?result=success');
@@ -81,6 +82,5 @@ if(isset($_GET['deleteAuction'])){
 else {
     header("Location: auction.php");
 }
-
 ?>
 

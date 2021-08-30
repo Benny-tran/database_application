@@ -110,7 +110,7 @@ if($email != false && $password != false){
                 <div class="col-md-12">
                     <div class="container mt-5">
                         <div class="row">
-                            <div class="mt-4 col-md-12 mb-4">
+                            <div class="mt-4 col-md-10 mb-4">
                                 <form style="margin:left; width:85% ">
                                     <input id="search_bar" type="text" placeholder="Search by Name, Code...." 
                                     style="width:100%;display:block">

@@ -15,7 +15,8 @@ if($email != false && $password != false){
     header('Location: ../loginSystem/login-user.php');
 }
 // Display all the Product Auction List
-$query = mysqli_query($con, 'SELECT * FROM auctionProduct');
+// $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
+
 function resize_image($file, $w, $h, $crop = FALSE)
 {
     list($width, $height) = getimagesize($file);
@@ -164,6 +165,19 @@ $currentTime = strtotime("now");
                                         }
                                     ?>
                                 </div>
+                                <!-- Display message alert base on different status -->
+                                <?php
+
+                            if(isset($_SESSION['message'])): ?>
+
+                                <div class="alert alert-<?=$_SESSION['msg_type']?>">
+
+                                    <?php
+                                        echo $_SESSION['message'];
+                                        unset($_SESSION['message']);
+                                    ?>
+                                </div>
+                            <?php endif ?>
                         <div id="createAuctionModal" class="modal">
                             <div class="modal-content">
                             <form action="auctionController.php" method="POST" enctype="multipart/form-data" >
@@ -214,7 +228,11 @@ $currentTime = strtotime("now");
                                 <option value="100">100</option>
                             </select>
                         </div>
-
+                        <!-- READ data from Database-->
+                        <?php
+                            $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
+                            $result = $mysqli->query("SELECT * from AUCTIONPRODUCT") or die($mysqli->error);
+                        ?>
                         <!-- Auction Table -->
                         <div class="row">
                             <div class="col-md-12">
@@ -236,7 +254,7 @@ $currentTime = strtotime("now");
                                         </thead>
                                         <tbody>
                                             <?php
-                                            while ($rows = mysqli_fetch_assoc($query)) {
+                                            while ($rows = $result->fetch_assoc()): 
                                             ?>
                                                 <tr>
                                                     <!-- <td><?php echo $rows['productID']; ?></td> -->
@@ -269,16 +287,14 @@ $currentTime = strtotime("now");
 
                                                         <?php if ($rows['status'] == 'completed') { ?>
                                                             <html>
-                                                                <a href="auctionController.php?delete=<?php echo $rows['productID'];?>" id="deleteAuction"
+                                                                <a href='auctionController.php?delete=<?php echo $rows['productID']; ?>' 
                                                                 class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')" 
                                                                 >Delete</button>
                                                             </html>
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
-                                            <?php
-                                            }
-                                            ?>
+                                            <?php endwhile; ?>
                                         </tbody>
                                     </table>
 
