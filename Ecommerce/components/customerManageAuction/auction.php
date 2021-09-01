@@ -44,8 +44,26 @@ function resize_image($file, $w, $h, $crop = FALSE)
 
     return $dst;
 }
-// $date = new DateTime();
-// $date->getTImestamp();
+// for jpg 
+function resize_imagejpg($file, $w, $h)
+{
+    list($width, $height) = getimagesize($file);
+    $src = imagecreatefromjpeg($file);
+    $dst = imagecreatetruecolor($w, $h);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $w, $h, $width, $height);
+    return $dst;
+}
+
+// for png
+function resize_imagepng($file, $w, $h)
+{
+    list($width, $height) = getimagesize($file);
+    $src = imagecreatefrompng($file);
+    $dst = imagecreatetruecolor($w, $h);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $w, $h, $width, $height);
+    return $dst;
+}
+
 $currentTime = strtotime("now");
 ?>
 <!DOCTYPE html>
@@ -94,7 +112,7 @@ $currentTime = strtotime("now");
             <!-- Sidebar Menu -->
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="../customerMarketPlace/market.php">
                         <i class="fas fa-book"></i>
                         <span>Marketplace</span>
                     </a>
@@ -152,7 +170,7 @@ $currentTime = strtotime("now");
                                 <h2 class="heading-section">Product Auction List</h2>
                             </div>
                             <div class="mt-5 col-md-3 mb-5">
-                                <button class="btn default" id="createAuction">Create Auction
+                                <button class="btn default modalBtn" id="createAuction" href='#createAuctionModal'>Create Auction
                                     <i class="fa fa-pencil-alt"></i></button>
                             </div>
                         </div>
@@ -178,6 +196,7 @@ $currentTime = strtotime("now");
                                     ?>
                                 </div>
                             <?php endif ?>
+                        <!-- Create Modal -->
                         <div id="createAuctionModal" class="modal">
                             <div class="modal-content">
                             <form action="auctionController.php" method="POST" enctype="multipart/form-data" >
@@ -231,7 +250,7 @@ $currentTime = strtotime("now");
                         <!-- READ data from Database-->
                         <?php
                             $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
-                            $result = $mysqli->query("SELECT * from AUCTIONPRODUCT") or die($mysqli->error);
+                            $result = $mysqli->query("SELECT * from AUCTIONPRODUCT A JOIN CUSTOMER C ON A.customerID = C.citizenID WHERE C.email = '$email' or C.phone = '$phone'") or die($mysqli->error);
                         ?>
                         <!-- Auction Table -->
                         <div class="row">
@@ -281,8 +300,9 @@ $currentTime = strtotime("now");
                                                     <td>
                                                         <?php if ($rows['status'] == 'active') { ?>
                                                             <html>
-                                                            <a class='btn btn-warning modalBtn' id="editAuction" href='#editAuctionModal'>Edit</a>
+                                                            <h5>On going auction</h5>
                                                             </html>
+                                                            
                                                         <?php } ?>
 
                                                         <?php if ($rows['status'] == 'completed') { ?>
@@ -354,46 +374,41 @@ $currentTime = strtotime("now");
 </html>
 
 <script>
-    $(function () {
-
-        $('.js-check-all').on('click', function () {
-
-            if ($(this).prop('checked')) {
-                $('th input[type="checkbox"]').each(function () {
-                    $(this).prop('checked', true);
-                })
-            } else {
-                $('th input[type="checkbox"]').each(function () {
-                    $(this).prop('checked', false);
-                })
-            }
-        });
-    });
-    // Get the modal
-    var modal = document.getElementById("createAuctionModal");
-
+    // All page modals
     // Get the button that opens the modal
-    var btn = document.getElementById("createAuction");
+    var btn = document.querySelectorAll("button.modalBtn");
+    var modals = document.querySelectorAll('.modal');
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    var spans = document.getElementsByClassName("close");
 
-    // When the user clicks the button, open the modal 
-    btn.onclick = function () {
-        modal.style.display = "block";
+    // When the user clicks the button, open the modal
+    for (var i = 0; i < btn.length; i++) {
+        btn[i].onclick = function(e) {
+            e.preventDefault();
+            modal = document.querySelector(e.target.getAttribute("href"));
+            modal.style.display = "block";
+        }
     }
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
+    for (var i = 0; i < spans.length; i++) {
+        spans[i].onclick = function() {
+            for (var index in modals) {
+                if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
+            }
+        }
     }
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            for (var index in modals) {
+                if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
+            }
         }
     }
+
 
     // pagination script 
 

@@ -1,8 +1,3 @@
-<?php
-include('dbBid.php');
-$email = $_SESSION['email'];
-$query = mysqli_query($con, "SELECT * FROM BIDREPORT B");
-?>
 <?php include "../loginsystem/loginController.php"; ?>
 <?php 
 $email = $_SESSION['email'];
@@ -72,7 +67,7 @@ if($email != false && $password != false){
             <!-- Sidebar Menu -->
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="../customerMarketPlace/market.php">
                         <i class="fas fa-book"></i>
                         <span>Marketplace</span>
                     </a>
@@ -119,15 +114,29 @@ if($email != false && $password != false){
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="container">
-
+                    <?php
+                    $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
+                    $result = $mysqli->query("SELECT * FROM BIDREPORT B JOIN CUSTOMER C ON B.bidderID = C.citizenID WHERE C.email = '$email' or C.phone = '$phone'") or die(mysqli_error($mysqli->error));
+                    ?>
                         <div class="row">
                             <div class="mt-5 col-md-9 mb-5">
                                 <h2 class="heading-section">Bid History/Report</h2>
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <select class="form-control" name="state" id="maxRows">
+                                <option value="5000">Show ALL Rows</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="70">70</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wrap">
@@ -143,7 +152,7 @@ if($email != false && $password != false){
                                         </thead>
                                         <tbody>
                                             <?php
-                                            while ($rows = mysqli_fetch_assoc($query)) {
+                                            while ($rows = $result->fetch_assoc()):
                                             ?>
 
                                                 <tr>
@@ -154,9 +163,7 @@ if($email != false && $password != false){
                                                     <td><?php echo $rows['bidamount']; ?></td>
                                                 </tr>
 
-                                            <?php
-                                            }
-                                            ?>
+                                            <?php endwhile; ?>
                                         </tbody>
                                     </table>
                                     <!--		Start Pagination -->
@@ -209,7 +216,9 @@ if($email != false && $password != false){
 <script>
 // pagination script 
 
-getPagination('#auction-table');
+// pagination script 
+
+getPagination('#bid-table');
     //getPagination('.table-class');
     //getPagination('table');
 
