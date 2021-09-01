@@ -292,20 +292,20 @@ $currentTime = strtotime("now");
                                                         //    check for current time
                                                         $closeTime = strtotime($rows['closeTime']);
                                                         if ($currentTime > $closeTime) {
-                                                            $rows['status'] = 'completed';
+                                                            $rows['statusProduct'] = 'completed';
                                                         }
-                                                        echo $rows['status'];
+                                                        echo $rows['statusProduct'];
                                                         ?></td>
                                                     <td><?php echo $rows['closeTime']; ?></td>
                                                     <td>
-                                                        <?php if ($rows['status'] == 'active') { ?>
+                                                        <?php if ($rows['statusProduct'] == 'active') { ?>
                                                             <html>
                                                             <h5>On going auction</h5>
                                                             </html>
                                                             
                                                         <?php } ?>
 
-                                                        <?php if ($rows['status'] == 'completed') { ?>
+                                                        <?php if ($rows['statusProduct'] == 'completed') { ?>
                                                             <html>
                                                                 <a href='auctionController.php?delete=<?php echo $rows['productID']; ?>' 
                                                                 class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')" 

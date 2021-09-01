@@ -39,7 +39,7 @@ if (isset($_POST['createProduct'])) {
                     $fetch = mysqli_fetch_assoc($res_customerID);
                     $status = 'active';
                     //Insert into Database
-                    $sql = "INSERT INTO AUCTIONPRODUCT (customerID, productName, descriptionProduct, startingPrice, productImageURL, status, closeTime) 
+                    $sql = "INSERT INTO AUCTIONPRODUCT (customerID, productName, descriptionProduct, startingPrice, productImageURL, statusProduct, closeTime) 
                             VALUES ('$customerID','$productName','$description','$startingPrice','$new_img_name','$status','$closeTime')";
                     $sql_run = mysqli_query($con, $sql);
                     if($sql_run){
