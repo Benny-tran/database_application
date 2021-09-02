@@ -22,7 +22,7 @@ if (isset($_POST['createProduct'])) {
     if($error === 0){
         if($img_size > 1250000){
             $em = "Sorry, your file is too large.";
-            header("Location: index.php?error=$em");
+            header("Location: auction.php?error=$em");
         }else{
             $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
             $img_ex_lc = strtolower($img_ex);

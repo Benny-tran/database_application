@@ -1,5 +1,7 @@
 {
     "cSpell.ignoreWords": [
+        "Pnumber",
+        "Servername",
         "auctioncontroller",
         "auctionproduct",
         "bidreport",
@@ -7,6 +9,7 @@
         "codeigniter",
         "cpassword",
         "encpass",
+        "fileupload",
         "laravel",
         "loginsystem",
         "usermanager"

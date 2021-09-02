@@ -85,7 +85,7 @@ if($email != false && $password != false){
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../customerProfile/profile.php">
                         <i class="fas fa-user"></i>
                         <span>Profile</span>
                     </a>

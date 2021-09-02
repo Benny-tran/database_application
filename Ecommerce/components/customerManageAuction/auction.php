@@ -130,7 +130,7 @@ $currentTime = strtotime("now");
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../customerProfile/profile.php">
                         <i class="fas fa-user"></i>
                         <span>Profile</span>
                     </a>
