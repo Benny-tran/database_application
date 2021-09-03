@@ -5,6 +5,7 @@
         "auctioncontroller",
         "auctionproduct",
         "bidreport",
+        "closedate",
         "cmnd",
         "codeigniter",
         "cpassword",

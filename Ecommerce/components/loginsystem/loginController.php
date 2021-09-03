@@ -74,7 +74,7 @@ if(isset($_POST['signup'])){
                 $_SESSION['name'] = $name;
                 $_SESSION['email'] = $email;
                 $_SESSION['phone'] = $phone;
-                header('location: ../customerManageAuction/auction.php');
+                header('location: ../customerMarketplace/market.php');
                 exit();
             }else{
                 $errors['otp-error'] = "Failed while updating code!";
@@ -104,7 +104,7 @@ if(isset($_POST['signup'])){
                   $_SESSION['email'] = $email;
                   $_SESSION['phone'] = $phone;
                   $_SESSION['password'] = $password;
-                    header('location: ../customerManageAuction/auction.php');
+                    header('location: ../customerMarketplace/market.php');
                 }else{
                     $info = "It's look like you haven't still verify your email - $email";
                     $_SESSION['info'] = $info;

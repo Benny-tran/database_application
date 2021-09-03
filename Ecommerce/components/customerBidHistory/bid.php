@@ -67,7 +67,7 @@ if($email != false && $password != false){
             <!-- Sidebar Menu -->
             <ul>
                 <li>
-                    <a href="../customerMarketPlace/market.php">
+                    <a href="../customerMarketplace/market.php">
                         <i class="fas fa-book"></i>
                         <span>Marketplace</span>
                     </a>
