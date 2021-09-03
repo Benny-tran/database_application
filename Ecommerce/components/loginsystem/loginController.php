@@ -128,7 +128,7 @@ if(isset($_POST['signup'])){
         if(mysqli_num_rows($res) > 0){
             $fetch = mysqli_fetch_assoc($res);
             $fetch_pass = $fetch['password'];
-            header('location: adminDashboard.php');
+            header('location: ../adminMarketplace/market.php');
             }else {
                 $errors['username'] = "Incorrect username or password";
             } 

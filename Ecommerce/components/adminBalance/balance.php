@@ -1,71 +1,3 @@
-<?php include "../loginsystem/loginController.php"; ?>
-<?php 
-$email = $_SESSION['email'];
-$phone = $_SESSION['email'];
-$password = $_SESSION['password'];
-if($email != false && $password != false){
-    $sql = "SELECT * FROM CUSTOMER WHERE email = '$email' or phone = '$phone'";
-    $run_Sql = mysqli_query($con, $sql);
-    if($run_Sql){
-        $fetch_info = mysqli_fetch_assoc($run_Sql);
-        $status = $fetch_info['status'];
-        $code = $fetch_info['code'];
-    }
-}else{
-    header('Location: ../loginSystem/login-user.php');
-}
-// Display all the Product Auction List
-// $query = mysqli_query($con, 'SELECT * FROM auctionProduct');
-
-function resize_image($file, $w, $h, $crop = FALSE)
-{
-    list($width, $height) = getimagesize($file);
-    $r = $width / $height;
-    if ($crop) {
-        if ($width > $height) {
-            $width = ceil($width - ($width * abs($r - $w / $h)));
-        } else {
-            $height = ceil($height - ($height * abs($r - $w / $h)));
-        }
-        $newwidth = $w;
-        $newheight = $h;
-    } else {
-        if ($w / $h > $r) {
-            $newwidth = $h * $r;
-            $newheight = $h;
-        } else {
-            $newheight = $w / $r;
-            $newwidth = $w;
-        }
-    }
-    $src = imagecreatefrompng($file);
-    $dst = imagecreatetruecolor($w, $h);
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
-    return $dst;
-}
-// for jpg 
-function resize_imagejpg($file, $w, $h)
-{
-    list($width, $height) = getimagesize($file);
-    $src = imagecreatefromjpeg($file);
-    $dst = imagecreatetruecolor($w, $h);
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $w, $h, $width, $height);
-    return $dst;
-}
-
-// for png
-function resize_imagepng($file, $w, $h)
-{
-    list($width, $height) = getimagesize($file);
-    $src = imagecreatefrompng($file);
-    $dst = imagecreatetruecolor($w, $h);
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $w, $h, $width, $height);
-    return $dst;
-}
-
-$currentTime = strtotime("now");
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,7 +5,7 @@ $currentTime = strtotime("now");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Auction</title>
+    <title>Admin Balance</title>
 
     <!-- Bootstrap CSS CDN -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -97,7 +29,6 @@ $currentTime = strtotime("now");
 </head>
 
 <body>
-<?php session_start(); ?>
     <?php include '../header/header.php' ?>
 
     <div class="wrapper">
@@ -106,33 +37,33 @@ $currentTime = strtotime("now");
             <div class="sidebar-header">
                 <div class="user-info">
                     <h3>Welcome</h3>
-                    <h5><?php echo $fetch_info['name'] ?></h5>
+                    <h5>Admin</h5>
                 </div>
             </div>
             <!-- Sidebar Menu -->
             <ul>
                 <li>
-                    <a href="../customerMarketPlace/market.php">
+                    <a href="../adminMarketplace/market.php">
                         <i class="fas fa-book"></i>
                         <span>Marketplace</span>
                     </a>
                 </li>
                 <li>
-                    <a href="auction.php">
+                    <a href="balance.php">
                         <i class="fas fa-cubes"></i>
-                        <span>Manage Auction</span>
+                        <span>Customer Balance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../customerBidHistory/bid.php">
-                        <i class="fas fa-gavel"></i>
+                    <a href="../adminBidHistory/bid.php">
+                        <i class="fas fa-user"></i>
                         <span>Bid History</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../customerProfile/profile.php">
-                        <i class="fas fa-user"></i>
-                        <span>Profile</span>
+                    <a href="../adminTransactionsHistory/transaction.php">
+                        <i class="fas fa-gavel"></i>
+                        <span>Transactions History</span>
                     </a>
                 </li>
                 <li>
@@ -166,75 +97,20 @@ $currentTime = strtotime("now");
 
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="mt-5 col-md-9 mb-5">
-                                <h2 class="heading-section">Product Auction List</h2>
-                            </div>
-                            <div class="mt-5 col-md-3 mb-5">
-                                <button class="btn default modalBtn" id="createAuction" href='#createAuctionModal'>Create Auction
-                                    <i class="fa fa-pencil-alt"></i></button>
+                            <div class="mt-5 col-md-12 mb-4">
+                                <h2 class="heading-section">Customer Account Balance</h2>
                             </div>
                         </div>
                         <div class="text-center">
                                     <?php
-                                        if(isset($_SESSION['status'])){
-                                            echo "<h5 class='alert alert-warning text-center'>".$_SESSION['status']."</h5>";
-                                            unset($_SESSION['status']);
+                                        if(isset($_SESSION['balance'])){
+                                            echo "<h5 class='alert alert-warning text-center'>".$_SESSION['balance']."</h5>";
+                                            unset($_SESSION['balance']);
                                             
                                         }
                                     ?>
                                 </div>
-                                <!-- Display message alert base on different status -->
-                                <?php
-
-                            if(isset($_SESSION['message'])): ?>
-
-                                <div class="alert alert-<?=$_SESSION['msg_type']?>">
-
-                                    <?php
-                                        echo $_SESSION['message'];
-                                        unset($_SESSION['message']);
-                                    ?>
-                                </div>
-                            <?php endif ?>
-                        <!-- Create Modal -->
-                        <div id="createAuctionModal" class="modal">
-                            <div class="modal-content">
-                            <form action="auctionController.php" method="POST" enctype="multipart/form-data" >
-                                <div class="modal-header">
-                                        <h2>Create Auction Product</h2>
-                                        <span class="close">&times;</span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Citizen ID</label>
-                                    <input class="form-control" type="text" name="customerID" placeholder="Citizen ID" required value="<?php echo $customerID ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Product Name</label>
-                                    <input class="form-control" type="text" name="productName" placeholder="Product Name" required value="<?php echo $productName ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <input class="form-control" type="text" name="description" placeholder="Description" required value="<?php echo $description ?>">
-                                </div>
-                                <div class="form-group">                                        
-                                    <label>Starting Price</label>
-                                    <input class="form-control" type="text" name="startingPrice" placeholder="Starting Price" required value="<?php echo $startingPrice ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Image</label>
-                                    <input class="form-control" type="file" name="my_image" required value="<?php echo $new_img_name ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>End Time</label>
-                                    <input class="form-control" type="datetime-local" name="closeTime" required value="<?php echo $closeTime ?>">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" name="createProduct">Create Auction</button>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                        
+                        <br>
                         <div class="form-group">
                             <select class="form-control" name="state" id="maxRows">
                                 <option value="5000">Show ALL Rows</option>
@@ -250,7 +126,7 @@ $currentTime = strtotime("now");
                         <!-- READ data from Database-->
                         <?php
                             $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
-                            $result = $mysqli->query("SELECT * from AUCTIONPRODUCT A JOIN CUSTOMER C ON A.customerID = C.citizenID WHERE C.email = '$email' or C.phone = '$phone'") or die($mysqli->error);
+                            $result = $mysqli->query("SELECT * from CUSTOMER") or die($mysqli->error);
                         ?>
                         <!-- Auction Table -->
                         <div class="row">
@@ -261,13 +137,11 @@ $currentTime = strtotime("now");
                                             <tr>
                                                 <!-- <th style="width:5%">Product ID</th> -->
                                                 <!-- <th>Product ID</th> -->
-                                                <th style="width:10%">Product Name</th>
-                                                <th style="width:10%">Description</th>
-                                                <th style="width:10%">Original Price</th>
-                                                <th style="width:25%">Image</th>
-                                                <th style="width:10%">Status</th>
-                                                <!-- <th>Created At</th> -->
-                                                <th style="width:10%">Closed At</th>
+                                                <th style="width:10%">Customer Name</th>
+                                                <th style="width:10%">Citizen ID</th>
+                                                <th style="width:10%">Email</th>
+                                                <th style="width:25%">Phone</th>
+                                                <th style="width:10%">Balance</th>
                                                 <th style="width:10%">Actions</th>
                                             </tr>
                                         </thead>
@@ -276,71 +150,43 @@ $currentTime = strtotime("now");
                                             while ($rows = $result->fetch_assoc()): 
                                             ?>
                                                 <tr>
-                                                    <!-- <td><?php echo $rows['productID']; ?></td> -->
-                                                    <td><?php echo $rows['productName']; ?></td>
-                                                    <td><?php echo $rows['descriptionProduct']; ?></td>
-                                                    <td><?php echo $rows['startingPrice']; ?></td>
+                                                    <td><?php echo $rows['name']; ?></td>
+                                                    <td><?php echo $rows['citizenID']; ?></td>
+                                                    <td><?php echo $rows['email']; ?></td>
+                                                    <td>+84<?php echo $rows['phone']; ?></td>
+                                                    <td><?php echo $rows['accountBalance']; ?></td>
                                                     <td>
-                                                        <?php
-                                                        $imageURL = 'uploads/' . $rows['productImageURL'];
-                                                        $img = resize_image($imageURL, 100, 100);
-                                                        ?>
-                                                        <img src="<?php echo $imageURL; ?>" alt="" />
-                                                        <!-- resize image -->
-                                                    </td>
-                                                    <td><?php
-                                                        //    check for current time
-                                                        $closeTime = strtotime($rows['closeTime']);
-                                                        if ($currentTime > $closeTime) {
-                                                            $rows['statusProduct'] = 'completed';
-                                                        }
-                                                        echo $rows['statusProduct'];
-                                                        ?></td>
-                                                    <td><?php echo $rows['closeTime']; ?></td>
-                                                    <td>
-                                                        <?php if ($rows['statusProduct'] == 'active') { ?>
-                                                            <html>
-                                                            <h5>On going auction</h5>
-                                                            </html>
-                                                            
-                                                        <?php } ?>
-
-                                                        <?php if ($rows['statusProduct'] == 'completed') { ?>
-                                                            <html>
-                                                                <a href='auctionController.php?delete=<?php echo $rows['productID']; ?>' 
-                                                                class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')" 
-                                                                >Delete</a>
-                                                            </html>
-                                                        <?php } ?>
+                                                    <a href='balance.php?delete=<?php echo $rows['citizenID']; ?>' 
+                                                    class='btn btn-warning'>Update</a>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
                                         </tbody>
                                     </table>
+                                    
+                                
+                                        <!--		Start Pagination -->
+                                        <div class='pagination-container'>
+                                            <nav>
+                                                <ul class="pagination">
 
-                                    <!--		Start Pagination -->
-                                    <div class='pagination-container'>
-                                        <nav>
-                                            <ul class="pagination">
-
-                                                <li data-page="prev">
-                                                    <span>
-                                                        < <span class="sr-only">(current)
-                                                    </span></span>
-                                                </li>
-                                                <!--	Here the JS Function Will Add the Rows -->
-                                                <li data-page="next" id="prev">
-                                                    <span> > <span class="sr-only">(current)</span></span>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                    <!-- css doesnt work?  -->
+                                                    <li data-page="prev">
+                                                        <span>
+                                                            < <span class="sr-only">(current)
+                                                        </span></span>
+                                                    </li>
+                                                    <!--	Here the JS Function Will Add the Rows -->
+                                                    <li data-page="next" id="prev">
+                                                        <span> > <span class="sr-only">(current)</span></span>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                    <!-- css doesnt work?  -->
 
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -374,41 +220,6 @@ $currentTime = strtotime("now");
 </html>
 
 <script>
-    // All page modals
-    // Get the button that opens the modal
-    var btn = document.querySelectorAll("button.modalBtn");
-    var modals = document.querySelectorAll('.modal');
-
-    // Get the <span> element that closes the modal
-    var spans = document.getElementsByClassName("close");
-
-    // When the user clicks the button, open the modal
-    for (var i = 0; i < btn.length; i++) {
-        btn[i].onclick = function(e) {
-            e.preventDefault();
-            modal = document.querySelector(e.target.getAttribute("href"));
-            modal.style.display = "block";
-        }
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    for (var i = 0; i < spans.length; i++) {
-        spans[i].onclick = function() {
-            for (var index in modals) {
-                if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
-            }
-        }
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-            for (var index in modals) {
-                if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
-            }
-        }
-    }
-
 
     // pagination script 
 

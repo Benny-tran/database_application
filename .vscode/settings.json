@@ -4,6 +4,7 @@
         "Servername",
         "auctioncontroller",
         "auctionproduct",
+        "bidamount",
         "bidreport",
         "closedate",
         "cmnd",
