@@ -73,18 +73,54 @@
 
     <?php include ('db.php');
 
-    $mysqli = new mysqli('localhost', 'root', '12345', 'assessment') or die(mysqli_error($mysqli));
-    $result = $mysqli->query("SELECT * from AUCTIONPRODUCT") or die($mysqli->error);
+$mysqli = new mysqli('localhost', 'root', '12345', 'assessment') or die(mysqli_error($mysqli));
 
-    if (isset($_POST['search'])) {
-      $searchq = $_POST['search'];
-      $query = $mysqli->query("SELECT * from AUCTIONPRODUCT where productName LIKE '%$searchq%'") or die("Could not find any matching auctions");
-    }
-    if (isset($_POST['filter'])) {
-      $statusFilter = $_POST['filter'];
-      $query = $mysqli->query("SELECT * from AUCTIONPRODUCT where status = 'completed'") or die($mysqli->error);
-
-    }
+if (isset($_GET['filter'])) {
+  $status = $_GET['filter'];
+  if ($status == "all") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT");
+  }
+  if ($status == "active") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT where statusProduct = '$status'");
+  }
+  if ($status == "completed") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT where statusProduct = '$status'");
+  }
+  if ($status == "name_asc") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT order by productName asc");
+  }
+  if ($status == "name_desc") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT order by productName desc");
+  }
+  if ($status == "time_asc") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT order by closeTime asc");
+  }
+  if ($status == "time_desc") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT order by closeTime desc");
+  }
+  if ($status == "price_asc") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT order by maximumPrice asc");
+  }
+  if ($status == "price_desc") {
+    $query = $mysqli->query("SELECT * FROM AUCTIONPRODUCT order by maximumPrice desc");
+  }
+  if ($status == "bids_asc") {
+    $query = $mysqli->query("SELECT AUCTIONPRODUCT.*, count(BIDREPORT.productID) as bid_count
+    from AUCTIONPRODUCT left join BIDREPORT
+      on AUCTIONPRODUCT.productID = BIDREPORT.productID
+      group by productID
+      order by bid_count asc");
+  }
+  if ($status == "bids_desc") {
+    $query = $mysqli->query("SELECT AUCTIONPRODUCT.*, count(BIDREPORT.productID) as bid_count
+    from AUCTIONPRODUCT left join BIDREPORT
+      on AUCTIONPRODUCT.productID = BIDREPORT.productID
+      group by productID
+      order by bid_count desc");
+  }
+} else {
+  $query = $mysqli->query("SELECT * from AUCTIONPRODUCT");
+};
 
     ?>
 
@@ -103,9 +139,18 @@
                 <img src="equalizer.png" style="width: 30px;">
               </button>
               <div class="dropdown-menu">
-                <button class="dropdown-item" value="filter">All auctions</button>
-                <button class="dropdown-item" name="active" value="filter">Active auctions</button>
-                <button class="dropdown-item" name="completed" value="filter">Completed auctions</button>
+                <!-- FILTER TIME -->
+              <a href="market.php?filter=all" class="dropdown-item" name="all">All auctions</a>
+              <a href="market.php?filter=active" class="dropdown-item" name="active">Active auctions</a>
+              <a href="market.php?filter=completed" class="dropdown-item" name="completed">Completed auctions</a>
+              <a href="market.php?filter=name_asc" class="dropdown-item" name="name_asc">Name ASC</a>
+              <a href="market.php?filter=name_desc" class="dropdown-item" name="name_desc">Name DESC</a>
+              <a href="market.php?filter=time_asc" class="dropdown-item" name="time_asc">Close time ASC</a>
+              <a href="market.php?filter=time_desc" class="dropdown-item" name="time_desc">Close time DESC</a>
+              <a href="market.php?filter=price_asc" class="dropdown-item" name="price_asc">Current Bid Price ASC</a>
+              <a href="market.php?filter=price_desc" class="dropdown-item" name="price_desc">Current Bid Price DESC</a>
+              <a href="market.php?filter=bids_asc" class="dropdown-item" name="bids_asc">Bids Placed ASC</a>
+              <a href="market.php?filter=bids_desc" class="dropdown-item" name="bids_desc">Bids Placed DESC</a>
               </div>
             </form> 
           </div>
@@ -114,7 +159,7 @@
               <!-------Card------>
               <?php
 
-              while ($row = mysqli_fetch_array($result)) {
+              while ($row = mysqli_fetch_array($query)) {
 
               ?>
                 <div class="col-md-4 mb-1">

@@ -33,6 +33,7 @@
 </head>
 
 <body>
+<?php session_start(); ?>   
     <?php include '../header/header.php' ?>
     <!-- layout is outdated -->
 
@@ -106,6 +107,15 @@
                                 <h2 class="heading-section">Transactions History/Report</h2>
                             </div>
                         </div>
+                        <div class="text-center">
+                                    <?php
+                                        if(isset($_SESSION['status'])){
+                                            echo "<h5 class='alert alert-warning text-center'>".$_SESSION['status']."</h5>";
+                                            unset($_SESSION['status']);
+                                            
+                                        }
+                                    ?>
+                                </div>
                         <div class="form-group">
                             <select class="form-control" name="state" id="maxRows">
                                 <option value="5000">Show ALL Rows</option>
@@ -130,6 +140,7 @@
                                                 <th>Buyer ID</th>
                                                 <th>Final Price</th>
                                                 <th>Transaction Date</th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -144,6 +155,10 @@
                                                     <td><?php echo $rows['buyerID']; ?></td>
                                                     <td><?php echo $rows['finalPrice']; ?></td>
                                                     <td><?php echo $rows['transactionDate']; ?></td>
+                                                    <td>
+                                                        <a href='transactionController.php?delete=<?php echo $rows['orderID']; ?>' 
+                                                                class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')" 
+                                                                >Delete</a></td>
                                                 </tr>
 
                                             <?php endwhile; ?>
