@@ -29,6 +29,7 @@
 </head>
 
 <body>
+<?php session_start(); ?>
     <?php include '../header/header.php' ?>
 
     <div class="wrapper">
@@ -156,13 +157,39 @@
                                                     <td>+84<?php echo $rows['phone']; ?></td>
                                                     <td><?php echo $rows['accountBalance']; ?></td>
                                                     <td>
-                                                    <a href='balance.php?delete=<?php echo $rows['citizenID']; ?>' 
-                                                    class='btn btn-warning'>Update</a>
+                                                    <!---- <a href='balance.php?delete=' class='btn btn-warning editbtn'  >Update</a> -->
+                                                    <button type="button" class='btn btn-warning editbtn'> Update </button>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
                                         </tbody>
                                     </table>
+
+                                    <div class="modal fade" id="updateBalanceModal" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);" aria-labelledby="exampleModalLabel" style="background-color: rgba(0, 0, 0, 0.5);" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Balance update form</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="balanceController.php " method="post">
+                                                    <div class="modal-body ">
+                                                        <input type="hidden" name="update_id" id="update_id" value="">
+                                                        <div class="form-group ">
+                                                            <label>Balance</label>
+                                                            <input class="form-control" name="update_balance" value="" id="update_balance" type="number">
+                                                        </div>
+                                                    </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" name="update" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     
                                 
                                         <!--		Start Pagination -->
@@ -218,6 +245,23 @@
 </body>
 
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('.editbtn').on('click', function() {
+
+            $('#updateBalanceModal').modal('show');
+
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            $('#update_id').val(data[2]);
+            $('#update_balance').val(data[5]);
+        });
+    });
+</script>
 
 <script>
 
