@@ -32,6 +32,7 @@
 <?php session_start(); ?>
     <?php include '../header/header.php' ?>
 
+    <!-- Wrapper for the website -->
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -96,6 +97,7 @@
                         </div>
                     </div>
 
+                    <!-- Status Display -->
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="mt-5 col-md-12 mb-4">
@@ -112,6 +114,7 @@
                                     ?>
                                 </div>
                         <br>
+                        <!-- Pagination -->
                         <div class="form-group">
                             <select class="form-control" name="state" id="maxRows">
                                 <option value="5000">Show ALL Rows</option>
@@ -136,8 +139,6 @@
                                     <table id="auction-table" class="table table-bordered table-striped display">
                                         <thead>
                                             <tr>
-                                                <!-- <th style="width:5%">Product ID</th> -->
-                                                <!-- <th>Product ID</th> -->
                                                 <th style="width:10%">Customer Name</th>
                                                 <th style="width:10%">Citizen ID</th>
                                                 <th style="width:10%">Email</th>
@@ -157,14 +158,14 @@
                                                     <td>+84<?php echo $rows['phone']; ?></td>
                                                     <td><?php echo $rows['accountBalance']; ?></td>
                                                     <td>
-                                                    <!---- <a href='balance.php?delete=' class='btn btn-warning editbtn'  >Update</a> -->
                                                     <button type="button" class='btn btn-warning editbtn'> Update </button>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
                                         </tbody>
                                     </table>
-
+                                    
+                                    <!-- Edit Modal -->
                                     <div class="modal fade" id="updateBalanceModal" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);" aria-labelledby="exampleModalLabel" style="background-color: rgba(0, 0, 0, 0.5);" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -192,7 +193,7 @@
                                     </div>
                                     
                                 
-                                        <!--		Start Pagination -->
+                                        <!-- Start Pagination -->
                                         <div class='pagination-container'>
                                             <nav>
                                                 <ul class="pagination">
@@ -209,8 +210,6 @@
                                                 </ul>
                                             </nav>
                                         </div>
-                    <!-- css doesnt work?  -->
-
                                 </div>
                             </div>
                         </div>
@@ -246,6 +245,7 @@
 
 </html>
 
+<!-- Edit Modal JVS -->
 <script>
     $(document).ready(function() {
         $('.editbtn').on('click', function() {
@@ -264,20 +264,14 @@
 </script>
 
 <script>
-
     // pagination script 
-
     getPagination('#auction-table');
-    //getPagination('.table-class');
-    //getPagination('table');
 
     function getPagination(table) {
         var lastPage = 1;
 
         $('#maxRows')
-            .on('change', function(evt) {
-                //$('.paginationprev').html('');						// reset pagination
-
+            .on('change', function(evt) {	// reset pagination
                 lastPage = 1;
                 $('.pagination')
                     .find('li')

@@ -27,6 +27,7 @@
 <body>
   <?php include '../header/header.php'; ?>
 
+  <!-- Wrapper for the Page Content -->
   <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -71,6 +72,7 @@
       </ul>
     </nav>
 
+    <!-- Read Data from database -->
     <?php include ('db.php');
 
 $mysqli = new mysqli('localhost', 'root', '12345', 'assessment') or die(mysqli_error($mysqli));
@@ -124,7 +126,6 @@ if (isset($_GET['filter'])) {
 
     ?>
 
-
     <!-- Page Content Holder -->
     <div id="content">
       <div class="row">
@@ -154,6 +155,7 @@ if (isset($_GET['filter'])) {
               </div>
             </form> 
           </div>
+          <!-- Market Card -->
           <div class="container" style="margin-left:30px; margin-top:10px; ">
             <div class="row">
               <!-------Card------>

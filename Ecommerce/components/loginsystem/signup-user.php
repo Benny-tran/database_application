@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- SignUp Form -->
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4 form">

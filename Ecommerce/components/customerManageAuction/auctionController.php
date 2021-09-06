@@ -2,7 +2,7 @@
 session_start();
 include('dbAuction.php');
 
-
+// INSERT DATA
 if (isset($_POST['createProduct'])) {
     $customerID = $_POST['customerID'];
     $check_customerID = "SELECT * FROM CUSTOMER WHERE citizenID = '$customerID'";

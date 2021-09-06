@@ -26,6 +26,7 @@
 
 <body>
     <?php include '../header/header.php'; ?>
+    <!-- Wrapper for the page content -->
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -71,8 +72,8 @@
 
         <!-- Page Content Holder -->
 
-
         <div id="content">
+            <!-- Read Data from database -->
             <?php
             include('db.php');
             if (isset($_GET['productID'])) {
@@ -86,7 +87,7 @@
             }
             ?>
             <div class="row">
-
+                <!-- Product Details Card -->
                 <div class="col-lg-4" style="margin-top:80px">
                     <?php
                     $imageURL = "../customerManageAuction/uploads/" . $details['productImageURL'];

@@ -55,6 +55,7 @@ if($email != false && $password != false){
     <?php include '../header/header.php' ?>
     <!-- layout is outdated -->
 
+    <!-- Wrapper for the page content -->
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -116,6 +117,7 @@ if($email != false && $password != false){
                     </div>
                     
                     <div class="container">
+                        <!-- Read Data from database -->
                     <?php
                     $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
                     $result = $mysqli->query("SELECT * FROM BIDREPORT B JOIN CUSTOMER C ON B.bidderID = C.citizenID WHERE C.email = '$email' or C.phone = '$phone'") or die(mysqli_error($mysqli->error));
@@ -125,6 +127,7 @@ if($email != false && $password != false){
                                 <h2 class="heading-section">Bid History/Report</h2>
                             </div>
                         </div>
+                        <!-- Pagination -->
                         <div class="form-group">
                             <select class="form-control" name="state" id="maxRows">
                                 <option value="5000">Show ALL Rows</option>
@@ -137,6 +140,7 @@ if($email != false && $password != false){
                                 <option value="100">100</option>
                             </select>
                         </div>
+                        <!-- Bid Table -->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wrap">
@@ -183,13 +187,10 @@ if($email != false && $password != false){
                                             </ul>
                                         </nav>
                                     </div>
-                                    <!-- css doesnt work?  -->
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -214,7 +215,6 @@ if($email != false && $password != false){
 </html>
 
 <script>
-// pagination script 
 
 // pagination script 
 

@@ -1,8 +1,8 @@
-session
 <?php 
 session_start();
 include ('db.php');
 
+// UPDATE DATA
 if(isset($_POST['update'])){
 $id=$_POST['update_id'];
 
@@ -12,7 +12,6 @@ $query_run=mysqli_query($con,$query);
 
 
 if($query_run){
-
     $_SESSION['balance'] = "Data Updated Successfully";
     header('location:balance.php?=success');
 }

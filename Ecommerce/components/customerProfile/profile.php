@@ -45,7 +45,7 @@ if ($email != false && $password != false) {
 <body>
 <?php session_start(); ?>
   <?php include '../header/header.php' ?>
-
+  <!-- Wrapper for the page content -->
   <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -90,6 +90,7 @@ if ($email != false && $password != false) {
       </ul>
     </nav>
     
+    <!-- Read Customer Profile data from database -->
     <?php
     require "db.php";
     $mysqli = new mysqli('localhost','customerManager','12345','assessment') or die(mysqli_error($mysqli));

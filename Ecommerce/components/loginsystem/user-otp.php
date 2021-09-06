@@ -15,6 +15,7 @@ if($email == false and $phone == false){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- USER OTP Form -->
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4 form">

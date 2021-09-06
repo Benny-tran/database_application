@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="css/datatable-bootstrap.min.css" media="screen">
 
     <!-- Our Custom CSS -->
-    <!-- <link rel="stylesheet" href="../layout/layout.css"> -->
     <link rel='stylesheet' href='style.css' />
 
     <!-- Font Awesome JS -->
@@ -37,6 +36,7 @@
     <?php include '../header/header.php' ?>
     <!-- layout is outdated -->
 
+    <!-- Wrapper for the page content -->
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -91,7 +91,6 @@
                                 <form style="margin:left; width:85% ">
                                     <input id="search_bar" type="text" placeholder="Search by Name, Code...." 
                                     style="width:100%;display:block">
-                                    <!-- <i class="fa fa-search"></i> -->
                                 </form>
                             </div>
                         </div>
@@ -116,6 +115,7 @@
                                         }
                                     ?>
                                 </div>
+                        <!-- Transaction Table -->
                         <div class="form-group">
                             <select class="form-control" name="state" id="maxRows">
                                 <option value="5000">Show ALL Rows</option>
@@ -327,7 +327,6 @@ getPagination('#bid-table');
     }
 
     function limitPagging() {
-        // alert($('.pagination li').length)
 
         if ($('.pagination li').length > 7) {
             if ($('.pagination li.active').attr('data-page') <= 3) {

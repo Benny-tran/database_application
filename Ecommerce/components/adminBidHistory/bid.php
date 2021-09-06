@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="css/datatable-bootstrap.min.css" media="screen">
 
     <!-- Our Custom CSS -->
-    <!-- <link rel="stylesheet" href="../layout/layout.css"> -->
     <link rel='stylesheet' href='style.css' />
 
     <!-- Font Awesome JS -->
@@ -36,6 +35,7 @@
     <?php include '../header/header.php' ?>
     <!-- layout is outdated -->
 
+    <!-- Wrapper for the Page Content -->
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -97,6 +97,7 @@
                     </div>
                     
                     <div class="container">
+                    <!-- Read Data -->
                     <?php
                     $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
                     $result = $mysqli->query("SELECT * FROM BIDREPORT B") or die(mysqli_error($mysqli->error));
@@ -106,6 +107,7 @@
                                 <h2 class="heading-section">Bid History/Report</h2>
                             </div>
                         </div>
+                        <!-- Pagination -->
                         <div class="form-group">
                             <select class="form-control" name="state" id="maxRows">
                                 <option value="5000">Show ALL Rows</option>
@@ -118,6 +120,7 @@
                                 <option value="100">100</option>
                             </select>
                         </div>
+                        <!-- Bid History Table -->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wrap">
