@@ -63,7 +63,7 @@ function resize_imagepng($file, $w, $h)
     imagecopyresampled($dst, $src, 0, 0, 0, 0, $w, $h, $width, $height);
     return $dst;
 }
-
+date_default_timezone_set("asia/ho_chi_minh");
 $currentTime = strtotime("now");
 ?>
 <!DOCTYPE html>

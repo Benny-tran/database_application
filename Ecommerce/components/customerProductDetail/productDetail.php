@@ -18,6 +18,7 @@ if($email != false && $password != false){
 }else{
     header('Location: ../loginSystem/login-user.php');
 }
+$currenttime = strtotime("now");
 ?>
 <!DOCTYPE html>
 <html>
@@ -154,13 +155,11 @@ if($email != false && $password != false){
                     <br>
                     <div id="item"><b>Close Date:</b> <?php echo $details['closeTime'] ?></div>
                     <br>
-                    <div id="item"><b>Status:</b> <?php echo $details['statusProduct'] ?></div>
-                    <br>
                     <?php
                     date_default_timezone_set("asia/ho_chi_minh");
                     $currentTime=new DateTime("now");
                     $closeTime=new DateTime($closeTime);
-                    $change_status="UPDATE AUCTIONPRODUCT SET status='completed' WHERE productID='$id' ";
+                    $change_status="UPDATE AUCTIONPRODUCT SET statusProduct ='completed' WHERE productID='$id' ";
                     $bidding_check=" SELECT MAX(bidamount) as currentBid,bidderID  FROM bidreport WHERE productID='$id' GROUP BY bidderID";
                     
                     if($currentTime > $closeTime){

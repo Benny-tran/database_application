@@ -14,6 +14,7 @@ if($email != false && $password != false){
 }else{
     header('Location: ../loginSystem/login-user.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,6 +43,7 @@ if($email != false && $password != false){
 </head>
 
 <body>
+<?php session_start(); ?>
   <?php include '../header/header.php'; ?>
 
   <div class="wrapper">
@@ -210,13 +212,24 @@ if (isset($_GET['filter'])) {
                         <input type="text" class="form-control form-control-sm col-12 " id="" placeholder="$$$" value="<?php echo $row['maximumPrice'] ?>" readonly>
                       </div>
                       <div class="row">
-                        <div class="column" style="width:40%">
-                          <div class="card-text" style="margin-left: 10px; font-size: 80%;">Status:</div>
-                          <div style="margin-left:10px;"><?php echo $row['statusProduct'] ?></div>
-                        </div>
+                        
                         <div class="column" style="width:60%">
                           <div class="card-text" style="margin-left: 10px; font-size: 80%;">Closing time:</div>
                           <div style="margin-left:10px;"><?php echo $row['closeTime'] ?></div>
+                        </div>
+                        <div class="column" style="width:40%">
+                          <div class="card-text" style="margin-left: 10px; font-size: 80%;">Status:</div>
+                          <div style="margin-left:10px;">
+                            <?php
+                            date_default_timezone_set("asia/ho_chi_minh");
+                            $currentTime= strtotime("now");
+                            $closeTime= strtotime($row['closeTime']);
+                            if($currentTime > $closeTime){
+                              $row['statusProduct'] = 'completed';
+                            }
+                            echo $row['statusProduct'] 
+                            ?>
+                           </div>
                         </div>
                       </div>
                       </p>
