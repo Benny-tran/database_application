@@ -221,9 +221,6 @@ if (isset($_GET['filter'])) {
                       </div>
                       </p>
                       <div class="card-body">
-                        <a class="btn btn-warning" href="#" class="card-link " style="font-size: 90%; width: 90%;">Bid</a>
-                        <br>
-                        <br>
                         <a class="btn btn-warning" 
                         href="../customerProductDetail/productDetail.php?productID=<?php echo $row['productID'] ?>" 
                         class="card-link " 
