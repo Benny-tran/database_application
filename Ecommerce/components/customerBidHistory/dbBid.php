@@ -2,7 +2,7 @@
 
 try{
     //place code here that could potentially throw an exception
-    $con = mysqli_connect('localhost', 'root', '12345', 'assessment');
+    $con = mysqli_connect('localhost', 'customerManager', '12345', 'assessment');
 
    //  echo 'connect successful';
  }

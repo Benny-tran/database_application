@@ -249,7 +249,7 @@ $currentTime = strtotime("now");
                         </div>
                         <!-- READ data from Database-->
                         <?php
-                            $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
+                            $mysqli = new mysqli('localhost','customerManager','12345','assessment') or die(mysqli_error($mysqli));
                             $result = $mysqli->query("SELECT * from AUCTIONPRODUCT A JOIN CUSTOMER C ON A.customerID = C.citizenID WHERE C.email = '$email' or C.phone = '$phone'") or die($mysqli->error);
                         ?>
                         <!-- Auction Table -->

@@ -1,3 +1,16 @@
+<?php include "../loginsystem/loginController.php"; ?>
+<?php 
+$username = $_SESSION['username'];
+if($username != false){
+    $sql = "SELECT * FROM ADMIN WHERE username = '$username'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+    }
+}else{
+    header('Location: ../loginSystem/login-admin.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -64,11 +77,6 @@
                 </li>
             </ul>
         </nav>
-        <?php
-        require "db.php";
-        $mysqli = new mysqli('localhost', 'root', '12345', 'assessment') or die(mysqli_error($mysqli));
-
-        ?>
 
         <!-- Page Content Holder -->
 
@@ -111,7 +119,15 @@
                     <br>
                     <div id="item"><b>Starting Price:</b> <?php echo $details['startingPrice'] ?></div>
                     <br>
-                    <div id="item"><b>Current Bid:</b> <?php echo $details['startingPrice']+20 ?></div>
+                    <div id="item"><b>Current Bid:</b> 
+                    <?php 
+                            if ('maximumPrice' === 0){
+                                echo $details['startingPrice'];
+                            }else {
+                                echo $details['maximumPrice']; 
+                            }
+                        ?>
+                    </div>
                     <!-- shit there's no current bid value in database -->
                     <br>
                     <div id="item"><b>Close Date:</b> <?php echo $details['closeTime'] ?></div>
@@ -130,7 +146,15 @@
                         <script language="JavaScript" src="countdown.js"></script>
                     </div>
                     <br>
-                    <div id="item"><b>Maximum Price:</b> <?php echo $details['maximumPrice'] ?></div>
+                    <div id="item"><b>Maximum Price:</b> 
+                    <?php 
+                        if ('maximumPrice' === 0){
+                            echo $details['startingPrice'];
+                        }else {
+                            echo $details['maximumPrice']; 
+                        }
+                    ?>
+                    </div>
                     <br>
                     <hr class="border-dark">
                 </div>

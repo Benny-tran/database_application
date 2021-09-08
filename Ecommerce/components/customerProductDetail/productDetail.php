@@ -98,12 +98,6 @@ if($email != false && $password != false){
             <?php
             include('db.php');
             if (isset($_GET['productID'])) {
-                // $id = $_GET['productID'];
-                // $result = $mysqli->query("SELECT productID,productName,name,startingPrice,maximumPrice,closeTime
-                //                             FROM auctionProduct JOIN customer
-                //                             ON customerID=citizenID
-                //                             WHERE productID=$id ") or die($mysqli->error);
-                // $details = mysqli_fetch_assoc($result);
                 $id = mysqli_real_escape_string($con, $_GET['productID']);
                 $sql = "SELECT productID,productName,name,statusProduct,startingPrice,maximumPrice,closeTime,productImageURL,descriptionProduct,statusProduct
                 FROM AUCTIONPRODUCT, CUSTOMER  WHERE customerID=citizenID AND productID='$id' ";
@@ -111,13 +105,12 @@ if($email != false && $password != false){
                 $details = mysqli_fetch_assoc($result);
                 $closedate = date_format(date_create($details['closeTime']), 'm/d/Y H:i:s');
                 $closetime=$details['closeTime'];
-                $seller=$details['name'];
+                $seller=$details['customerID'];
                 $maxPrice=$details['maximumPrice'];
                 $status=$details['statusProduct'];
                 $productName=$details['productName'];
                 $startPrice=$details['startingPrice'];
                 global $id,$status,$productName,$startPrice;
-                //mysqli_close($con);
             }
             ?>
             <div class="row">
@@ -147,7 +140,7 @@ if($email != false && $password != false){
                     <br>
                     <div id="item"><b>Current Bid:</b> 
                         <?php 
-                            if ('maximumPrice' == 0){
+                            if ('maximumPrice' === 0){
                                 echo $details['startingPrice'];
                             }else {
                                 echo $details['maximumPrice']; 
@@ -164,6 +157,7 @@ if($email != false && $password != false){
                     $closeTime = new DateTime($closetime);
                     $change_status ="UPDATE AUCTIONPRODUCT SET statusProduct = 'completed' WHERE productID='$id' ";
                     $bidding_check =" SELECT bidderID,bidamount as currentBid FROM BIDREPORT  where productID= '$id' order by bidamount DESC limit 1";
+                    $delete_report="DELETE FROM BIDREPORT where productID='$id'";
                     
                     if($currentTime > $closeTime){
                         $complete_status=mysqli_query($con,$change_status);
@@ -178,6 +172,7 @@ if($email != false && $password != false){
                             header('location:../customerProfile/profile.php');
                             if($pay_phase=mysqli_query($con,$balance_pay)){
                                 $transaction_phase=mysqli_query($con,$transaction_add);
+                                $delete_report_run=mysqli_query($con,$delete_report);
                             }
                         }
                     }
@@ -198,7 +193,7 @@ if($email != false && $password != false){
                     <br>
                     <div id="item"><b>Maximum Price:</b> 
                         <?php 
-                        if ('maximumPrice' == 0){
+                        if ('maximumPrice' === 0){
                             echo $details['startingPrice'];
                         }else {
                             echo $details['maximumPrice']; 
@@ -217,7 +212,7 @@ if($email != false && $password != false){
                     </div>
                     <div class="row-button">
                         <button <?php if($status == 'completed') { echo 'style="display:none "';} ?> class="button" name="bid" >Place Bid</button>
-                        <!-- check bid price higher than startingprice & current bid (skip this feature), 
+                        <!-- check bid price higher than starting price & current bid (skip this feature), 
                     throw error if higher than max price -->
                         <a <?php if($status == 'completed') { echo 'style="display:none "';} ?> class="button" href="../customerMarketPlace/market.php">Cancel</a>
                     </div>
@@ -252,10 +247,13 @@ if($email != false && $password != false){
                                         echo '<script> alert("Bid successfully"); </script>';
                                         $query_run2=mysqli_query($con,$query2);
                                         header("Refresh:0");  
-                                    }         
+                                    }     
+                                    else{
+                                        echo'<script> alert("Your bid amount may not be valid or the number is so HIGH compare with the current BID or exceed the payment capability!"); </script>';
+                                    }    
                                 }
                                 else{
-                                    echo'<script> alert("Your bid amount may not be valid or the number is so HIGH compare with the current BID or exceed the payment capability!"); </script>';
+                                    echo'<script> alert("You cannot bid your own product!"); </script>';
                                 }
                             }
                             else{

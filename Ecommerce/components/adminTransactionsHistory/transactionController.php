@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db.php');
+include('dbAdmin.php');
 
 // DELETE DATA
 if(isset($_GET['delete'])){
@@ -9,10 +9,10 @@ if(isset($_GET['delete'])){
     $result = mysqli_query($con,$sql_delete);
     if(mysqli_affected_rows($result)>0){
     $_SESSION['status'] = "Data Deleted Fail";
-      header('auction.php?result=fail');
+      header('Location: transaction.php?result=fail');
       } else {
         $_SESSION['status'] = "Data Deleted Successfully";
-        header('auction.php?result=success');
+        header('Location: transaction.php?result=success');
       }
     }
 else {

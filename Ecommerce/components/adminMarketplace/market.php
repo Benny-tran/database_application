@@ -1,3 +1,16 @@
+<?php include "../loginsystem/loginController.php"; ?>
+<?php 
+$username = $_SESSION['username'];
+if($username != false){
+    $sql = "SELECT * FROM ADMIN WHERE username = '$username'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+    }
+}else{
+    header('Location: ../loginSystem/login-admin.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -75,7 +88,7 @@
     <!-- Read Data from database -->
     <?php include ('db.php');
 
-$mysqli = new mysqli('localhost', 'root', '12345', 'assessment') or die(mysqli_error($mysqli));
+$mysqli = new mysqli('localhost', 'adminManager', '12345', 'assessment') or die(mysqli_error($mysqli));
 
 if (isset($_GET['filter'])) {
   $status = $_GET['filter'];
@@ -192,7 +205,15 @@ if (isset($_GET['filter'])) {
                         Current price:
                       </div>
                       <div class="form-group" style="width: 290px; margin-left:5px;">
-                        <input type="text" class="form-control form-control-sm col-12 " id="" placeholder="$$$" value="<?php echo $row['maximumPrice'] ?>" readonly>
+                        <input type="text" class="form-control form-control-sm col-12 " id="" placeholder="$$$" 
+                        value="<?php 
+                          if ('maximumPrice' === 0){
+                            echo $row['startingPrice'];
+                            }else {
+                                echo $row['maximumPrice']; 
+                            }
+                        ?>" 
+                        readonly>
                       </div>
                       <div class="row">
                         <div class="column" style="width:40%">

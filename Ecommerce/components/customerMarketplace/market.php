@@ -92,7 +92,7 @@ if($email != false && $password != false){
 
     <?php include ('db.php');
 
-$mysqli = new mysqli('localhost', 'root', '12345', 'assessment') or die(mysqli_error($mysqli));
+$mysqli = new mysqli('localhost', 'customerManager', '12345', 'assessment') or die(mysqli_error($mysqli));
 
 if (isset($_GET['filter'])) {
   $status = $_GET['filter'];
@@ -211,7 +211,7 @@ if (isset($_GET['filter'])) {
                       <div class="form-group" style="width: 290px; margin-left:5px;">
                         <input type="text" class="form-control form-control-sm col-12 " id="" placeholder="$$$" 
                         value="<?php 
-                                  if ($row['maximumPrice' == 0]){
+                                  if ('maximumPrice' === 0){
                                     echo $row['startingPrice'];
                                     }else {
                                         echo $row['maximumPrice']; 

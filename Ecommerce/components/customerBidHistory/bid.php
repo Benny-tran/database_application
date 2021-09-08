@@ -119,7 +119,7 @@ if($email != false && $password != false){
                     <div class="container">
                         <!-- Read Data from database -->
                     <?php
-                    $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
+                    $mysqli = new mysqli('localhost','customerManager','12345','assessment') or die(mysqli_error($mysqli));
                     $result = $mysqli->query("SELECT * FROM BIDREPORT B JOIN CUSTOMER C ON B.bidderID = C.citizenID WHERE C.email = '$email' or C.phone = '$phone'") or die(mysqli_error($mysqli->error));
                     ?>
                         <div class="row">

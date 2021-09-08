@@ -1,3 +1,16 @@
+<?php include "../loginsystem/loginController.php"; ?>
+<?php 
+$username = $_SESSION['username'];
+if($username != false){
+    $sql = "SELECT * FROM ADMIN WHERE username = '$username'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+    }
+}else{
+    header('Location: ../loginSystem/login-admin.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,10 +110,6 @@
                     </div>
                     
                     <div class="container">
-                    <?php
-                    $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
-                    $result = $mysqli->query("SELECT * FROM TRANSACTION") or die(mysqli_error($mysqli->error));
-                    ?>
                         <div class="row">
                             <div class="mt-5 col-md-9 mb-5">
                                 <h2 class="heading-section">Transactions History/Report</h2>
@@ -115,6 +124,10 @@
                                         }
                                     ?>
                                 </div>
+                                <?php
+                                    $mysqli = new mysqli('localhost','adminManager','12345','assessment') or die(mysqli_error($mysqli));
+                                    $result = $mysqli->query("SELECT * FROM TRANSACTION") or die(mysqli_error($mysqli->error));
+                                ?>
                         <!-- Transaction Table -->
                         <div class="form-group">
                             <select class="form-control" name="state" id="maxRows">
@@ -158,7 +171,8 @@
                                                     <td>
                                                         <a href='transactionController.php?delete=<?php echo $rows['orderID']; ?>' 
                                                                 class='btn btn-danger' onclick="return confirm('Are you sure you want to delete?')" 
-                                                                >Delete</a></td>
+                                                                >Delete</a>
+                                                    </td>
                                                 </tr>
 
                                             <?php endwhile; ?>

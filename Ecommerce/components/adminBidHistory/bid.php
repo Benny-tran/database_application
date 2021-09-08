@@ -1,3 +1,16 @@
+<?php include "../loginsystem/loginController.php"; ?>
+<?php 
+$username = $_SESSION['username'];
+if($username != false){
+    $sql = "SELECT * FROM ADMIN WHERE username = '$username'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+    }
+}else{
+    header('Location: ../loginSystem/login-admin.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,7 +112,7 @@
                     <div class="container">
                     <!-- Read Data -->
                     <?php
-                    $mysqli = new mysqli('localhost','root','12345','assessment') or die(mysqli_error($mysqli));
+                    $mysqli = new mysqli('localhost','adminManager','12345','assessment') or die(mysqli_error($mysqli));
                     $result = $mysqli->query("SELECT * FROM BIDREPORT B") or die(mysqli_error($mysqli->error));
                     ?>
                         <div class="row">

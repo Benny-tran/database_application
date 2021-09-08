@@ -127,6 +127,7 @@ if(isset($_POST['signup'])){
         $res = mysqli_query($con, $check_admin);
         if(mysqli_num_rows($res) > 0){
             $fetch = mysqli_fetch_assoc($res);
+            $_SESSION['username'] = $username;
             $fetch_pass = $fetch['password'];
             header('location: ../adminMarketplace/market.php');
             }else {
