@@ -209,7 +209,15 @@ if (isset($_GET['filter'])) {
                         Current price:
                       </div>
                       <div class="form-group" style="width: 290px; margin-left:5px;">
-                        <input type="text" class="form-control form-control-sm col-12 " id="" placeholder="$$$" value="<?php echo $row['maximumPrice'] ?>" readonly>
+                        <input type="text" class="form-control form-control-sm col-12 " id="" placeholder="$$$" 
+                        value="<?php 
+                                  if ($row['maximumPrice' == 0]){
+                                    echo $row['startingPrice'];
+                                    }else {
+                                        echo $row['maximumPrice']; 
+                                    }
+                                ?>" 
+                        readonly>
                       </div>
                       <div class="row">
                         

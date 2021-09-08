@@ -4,7 +4,7 @@ $email = $_SESSION['email'];
 $phone = $_SESSION['email'];
 $password = $_SESSION['password'];
 if($email != false && $password != false){
-    $sql = "SELECT * FROM customer WHERE email = '$email' or phone = '$phone'";
+    $sql = "SELECT * FROM CUSTOMER WHERE email = '$email' or phone = '$phone'";
     $run_Sql = mysqli_query($con, $sql);
     if($run_Sql){
         $fetch_info = mysqli_fetch_assoc($run_Sql);
@@ -90,11 +90,6 @@ if($email != false && $password != false){
                 </li>
             </ul>
         </nav>
-        <?php
-        require "db.php";
-        $mysqli = new mysqli('localhost', 'root', 'root', 'assessment') or die(mysqli_error($mysqli));
-
-        ?>
 
         <!-- Page Content Holder -->
 
@@ -110,18 +105,18 @@ if($email != false && $password != false){
                 //                             WHERE productID=$id ") or die($mysqli->error);
                 // $details = mysqli_fetch_assoc($result);
                 $id = mysqli_real_escape_string($con, $_GET['productID']);
-                $sql = "SELECT a.productID,a.productName,c.name,a.status,a.startingPrice,a.maximumPrice,a.closeTime,a.productImageURL,a.description
-                FROM auctionproduct as a, customer as c WHERE customerID=citizenID AND productID='$id' ";
+                $sql = "SELECT productID,productName,name,statusProduct,startingPrice,maximumPrice,closeTime,productImageURL,descriptionProduct,statusProduct
+                FROM AUCTIONPRODUCT, CUSTOMER  WHERE customerID=citizenID AND productID='$id' ";
                 $result = mysqli_query($con, $sql);
                 $details = mysqli_fetch_assoc($result);
-                $closedate = date_format(date_create($details['closeTime']), 'Y-m-d H:i:s');
+                $closedate = date_format(date_create($details['closeTime']), 'm/d/Y H:i:s');
                 $closetime=$details['closeTime'];
                 $seller=$details['name'];
                 $maxPrice=$details['maximumPrice'];
-                $status=$details['status'];
+                $status=$details['statusProduct'];
                 $productName=$details['productName'];
                 $startPrice=$details['startingPrice'];
-                global $id,$status,$productName;
+                global $id,$status,$productName,$startPrice;
                 //mysqli_close($con);
             }
             ?>
@@ -146,21 +141,29 @@ if($email != false && $password != false){
                     <br>
                     <div id="item"><b>Seller Name:</b> <?php echo $details['name'] ?></div>
                     <br>
-                    <div id="item"><b>Product Description:</b> <?php echo $details['description'] ?></div>
+                    <div id="item"><b>Product Description:</b> <?php echo $details['descriptionProduct'] ?></div>
                     <br>
                     <div id="item"><b>Starting Price:</b> <?php echo $details['startingPrice'] ?></div>
                     <br>
-                    <div id="item"><b>Current Bid:</b> <?php echo $details['maximumPrice']+20 ?></div>
+                    <div id="item"><b>Current Bid:</b> 
+                        <?php 
+                            if ('maximumPrice' == 0){
+                                echo $details['startingPrice'];
+                            }else {
+                                echo $details['maximumPrice']; 
+                            }
+                        ?>
+                    </div>
                     <!-- shit there's no current bid value in database -->
                     <br>
                     <div id="item"><b>Close Date:</b> <?php echo $details['closeTime'] ?></div>
                     <br>
                     <?php
                     date_default_timezone_set("asia/ho_chi_minh");
-                    $currentTime=new DateTime("now");
-                    $closeTime=new DateTime($closetime);
-                    $change_status="UPDATE auctionproduct SET status='completed' WHERE productID='$id' ";
-                    $bidding_check=" SELECT bidderID,bidamount as currentBid FROM bidreport  where productID=2 order by bidamount DESC limit 1";
+                    $currentTime = new DateTime("now");
+                    $closeTime = new DateTime($closetime);
+                    $change_status ="UPDATE AUCTIONPRODUCT SET statusProduct = 'completed' WHERE productID='$id' ";
+                    $bidding_check =" SELECT bidderID,bidamount as currentBid FROM BIDREPORT  where productID= '$id' order by bidamount DESC limit 1";
                     
                     if($currentTime > $closeTime){
                         $complete_status=mysqli_query($con,$change_status);
@@ -168,7 +171,7 @@ if($email != false && $password != false){
                             $bidding_result=mysqli_fetch_assoc($bidding_sum);
                             $winnerID=$bidding_result['bidderID'];
                             $payAmount=$bidding_result["currentBid"];
-                            $balance_pay="UPDATE customer SET accountBalance=accountBalance-'$payAmount' WHERE citizenID='$winnerID' ";
+                            $balance_pay="UPDATE CUSTOMER SET accountBalance=accountBalance-'$payAmount' WHERE citizenID='$winnerID' ";
                             $transDate = date("Y-m-d h:i:s");
                             $transaction_add="INSERT INTO transaction (productID,buyerID,productName,startingPrice,finalPrice,transactionDate)
                             values ('$id','$winnerID','$productName','$startPrice','$payAmount','$transDate') ";
@@ -177,11 +180,7 @@ if($email != false && $password != false){
                                 $transaction_phase=mysqli_query($con,$transaction_add);
                             }
                         }
-                        
-
                     }
-                 
-                    
                     ?>
                     <div id="item-time"><b>Close Time:</b>
                         <script language="JavaScript">
@@ -197,7 +196,15 @@ if($email != false && $password != false){
                         <script language="JavaScript" src="countdown.js"></script>
                     </div>
                     <br>
-                    <div id="item"><b>Maximum Price:</b> <?php echo $details['maximumPrice'] ?></div>
+                    <div id="item"><b>Maximum Price:</b> 
+                        <?php 
+                        if ('maximumPrice' == 0){
+                            echo $details['startingPrice'];
+                        }else {
+                            echo $details['maximumPrice']; 
+                        }
+                        ?>
+                    </div>
                     <br>
                     <hr class="border-dark">
 
@@ -209,10 +216,10 @@ if($email != false && $password != false){
                         <input <?php if($status == 'completed') { echo 'style="display:none "';} ?> type="text" name="bidPrice" class="form-control form-control-sm " id="form" placeholder="$$$">
                     </div>
                     <div class="row-button">
-                        <button class="button" name="bid" >Place Bid</button>
+                        <button <?php if($status == 'completed') { echo 'style="display:none "';} ?> class="button" name="bid" >Place Bid</button>
                         <!-- check bid price higher than startingprice & current bid (skip this feature), 
                     throw error if higher than max price -->
-                        <a class="button" href="../customerMarketPlace/market.php">Cancel</a>
+                        <a <?php if($status == 'completed') { echo 'style="display:none "';} ?> class="button" href="../customerMarketPlace/market.php">Cancel</a>
                     </div>
                     </form>
                     <?php
@@ -222,24 +229,24 @@ if($email != false && $password != false){
                         $bidAmount = $_POST['bidPrice'];
                         $currentDate = date("Y-m-d h:i:s");
                         $limit=1000;
-                        $query1 = "INSERT INTO bidreport(`productID`,`bidderID`,`bidDateTime`,`bidamount`)
+                        $query1 = "INSERT INTO BIDREPORT(productID,bidderID,bidDateTime,bidamount)
                         VALUES ('$id','$customerID','$currentDate','$bidAmount')";
-                        $query2="UPDATE auctionproduct SET maximumPrice='$bidAmount' WHERE productID='$id' ";
-                        $query3="SELECT  sum(bid_value) as  totalSum FROM(
+                        $query2="UPDATE AUCTIONPRODUCT SET maximumPrice='$bidAmount' WHERE productID=$id ";
+                        $query3="SELECT sum(bid_value) as totalSum FROM(
                         SELECT MAX(b.bidamount) as bid_value,MAX(b.bidderID)  
-                        FROM bidreport as b
+                        FROM BIDREPORT as b
                         WHERE bidderID='$customerID'
-                        GROUP BY  productID 
+                        GROUP BY productID 
                         )b";
+                        
+
                         $query3_run=mysqli_query($con,$query3);
                         $query3_result=mysqli_fetch_assoc($query3_run);
                         $sumBid=$query3_result["totalSum"];
 
-
-
                         if ($seller!=$customerID) {
                             if($balance>$maxPrice){   
-                                if($bidAmount > $maxPrice and $bidAmount<=($maxPrice+$limit) and $bidAmount <=$balance and ($bidAmount+$sumBid)<$balance ){
+                                if($bidAmount > $maxPrice and $bidAmount<=($maxPrice+$limit) and $bidAmount <=$balance and ($bidAmount+$sumBid)<$balance){
                                     if( $query_run1=mysqli_query($con,$query1)){
                                         
                                         echo '<script> alert("Bid successfully"); </script>';
@@ -248,14 +255,14 @@ if($email != false && $password != false){
                                     }         
                                 }
                                 else{
-                                    echo'<script> alert("Your bid amount may not be valid or exceed the payment capability!"); </script>';
+                                    echo'<script> alert("Your bid amount may not be valid or the number is so HIGH compare with the current BID or exceed the payment capability!"); </script>';
                                 }
                             }
                             else{
                                 echo '<script> alert("Your balance is insufficient to bid!!"); </script>';
                             }
                         } else {
-                            echo '<script> alert("You cannnot bid your own product!"); </script>';
+                            echo '<script> alert("You cannot bid your own product!"); </script>';
                         }
                     }
                     ?>
