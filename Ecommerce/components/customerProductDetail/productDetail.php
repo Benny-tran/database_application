@@ -4,7 +4,7 @@ $email = $_SESSION['email'];
 $phone = $_SESSION['email'];
 $password = $_SESSION['password'];
 if($email != false && $password != false){
-    $sql = "SELECT * FROM CUSTOMER WHERE email = '$email' or phone = '$phone'";
+    $sql = "SELECT * FROM customer WHERE email = '$email' or phone = '$phone'";
     $run_Sql = mysqli_query($con, $sql);
     if($run_Sql){
         $fetch_info = mysqli_fetch_assoc($run_Sql);
@@ -13,12 +13,10 @@ if($email != false && $password != false){
         $customerID=$fetch_info['citizenID'];
         $balance=$fetch_info['accountBalance'];
         global $customerID;
-
     }
 }else{
     header('Location: ../loginSystem/login-user.php');
 }
-$currenttime = strtotime("now");
 ?>
 <!DOCTYPE html>
 <html>
@@ -94,7 +92,7 @@ $currenttime = strtotime("now");
         </nav>
         <?php
         require "db.php";
-        $mysqli = new mysqli('localhost', 'root', '12345', 'assessment') or die(mysqli_error($mysqli));
+        $mysqli = new mysqli('localhost', 'root', 'root', 'assessment') or die(mysqli_error($mysqli));
 
         ?>
 
@@ -112,17 +110,19 @@ $currenttime = strtotime("now");
                 //                             WHERE productID=$id ") or die($mysqli->error);
                 // $details = mysqli_fetch_assoc($result);
                 $id = mysqli_real_escape_string($con, $_GET['productID']);
-                $sql = "SELECT productID,productName,name,startingPrice,maximumPrice,closeTime,productImageURL,descriptionProduct, statusProduct
-                FROM auctionProduct JOIN customer ON customerID=citizenID WHERE productID=$id ";
+                $sql = "SELECT a.productID,a.productName,c.name,a.status,a.startingPrice,a.maximumPrice,a.closeTime,a.productImageURL,a.description
+                FROM auctionproduct as a, customer as c WHERE customerID=citizenID AND productID='$id' ";
                 $result = mysqli_query($con, $sql);
                 $details = mysqli_fetch_assoc($result);
-                $closedate = date_format(date_create($details['closeTime']), 'm/d/Y H:i:s');
-                $closeTime = $details['closeTime'];
+                $closedate = date_format(date_create($details['closeTime']), 'Y-m-d H:i:s');
+                $closetime=$details['closeTime'];
                 $seller=$details['name'];
                 $maxPrice=$details['maximumPrice'];
-                $status=$details['statusProduct'];
-                global $id,$status;
-                // mysqli_close($con);
+                $status=$details['status'];
+                $productName=$details['productName'];
+                $startPrice=$details['startingPrice'];
+                global $id,$status,$productName;
+                //mysqli_close($con);
             }
             ?>
             <div class="row">
@@ -146,11 +146,11 @@ $currenttime = strtotime("now");
                     <br>
                     <div id="item"><b>Seller Name:</b> <?php echo $details['name'] ?></div>
                     <br>
-                    <div id="item"><b>Product Description:</b> <?php echo $details['descriptionProduct'] ?></div>
+                    <div id="item"><b>Product Description:</b> <?php echo $details['description'] ?></div>
                     <br>
                     <div id="item"><b>Starting Price:</b> <?php echo $details['startingPrice'] ?></div>
                     <br>
-                    <div id="item"><b>Current Bid:</b> <?php echo $details['maximumPrice'] ?></div>
+                    <div id="item"><b>Current Bid:</b> <?php echo $details['maximumPrice']+20 ?></div>
                     <!-- shit there's no current bid value in database -->
                     <br>
                     <div id="item"><b>Close Date:</b> <?php echo $details['closeTime'] ?></div>
@@ -158,9 +158,9 @@ $currenttime = strtotime("now");
                     <?php
                     date_default_timezone_set("asia/ho_chi_minh");
                     $currentTime=new DateTime("now");
-                    $closeTime=new DateTime($closeTime);
-                    $change_status="UPDATE AUCTIONPRODUCT SET statusProduct ='completed' WHERE productID='$id' ";
-                    $bidding_check=" SELECT MAX(bidamount) as currentBid,bidderID  FROM bidreport WHERE productID='$id' GROUP BY bidderID";
+                    $closeTime=new DateTime($closetime);
+                    $change_status="UPDATE auctionproduct SET status='completed' WHERE productID='$id' ";
+                    $bidding_check=" SELECT bidderID,bidamount as currentBid FROM bidreport  where productID=2 order by bidamount DESC limit 1";
                     
                     if($currentTime > $closeTime){
                         $complete_status=mysqli_query($con,$change_status);
@@ -168,11 +168,20 @@ $currenttime = strtotime("now");
                             $bidding_result=mysqli_fetch_assoc($bidding_sum);
                             $winnerID=$bidding_result['bidderID'];
                             $payAmount=$bidding_result["currentBid"];
-                            $balance_pay="UPDATE CUSTOMER SET accountBalance=accountBalance -'$payAmount' WHERE citizenID='$winnerID' ";
-                            $pay_phase=mysqli_query($con,$balance_pay);
+                            $balance_pay="UPDATE customer SET accountBalance=accountBalance-'$payAmount' WHERE citizenID='$winnerID' ";
+                            $transDate = date("Y-m-d h:i:s");
+                            $transaction_add="INSERT INTO transaction (productID,buyerID,productName,startingPrice,finalPrice,transactionDate)
+                            values ('$id','$winnerID','$productName','$startPrice','$payAmount','$transDate') ";
                             header('location:../customerProfile/profile.php');
+                            if($pay_phase=mysqli_query($con,$balance_pay)){
+                                $transaction_phase=mysqli_query($con,$transaction_add);
+                            }
                         }
+                        
+
                     }
+                 
+                    
                     ?>
                     <div id="item-time"><b>Close Time:</b>
                         <script language="JavaScript">
@@ -197,11 +206,13 @@ $currenttime = strtotime("now");
                         Bid amount:
                     </div>
                     <div class="form-group" style="width: 190px; margin-left:5px;">
-                    <input <?php if($status == 'completed') { echo 'style="display:none "';} ?> type="text" name="bidPrice" class="form-control form-control-sm " id="form" placeholder="$$$">
+                        <input <?php if($status == 'completed') { echo 'style="display:none "';} ?> type="text" name="bidPrice" class="form-control form-control-sm " id="form" placeholder="$$$">
                     </div>
                     <div class="row-button">
-                        <button <?php if($status == 'completed') { echo 'style="display:none "';} ?> class="button" name="bid" >Place Bid</button>
-                        <a <?php if($status == 'completed') { echo 'style="display:none "';} ?> class="button" href="../customerMarketPlace/market.php">Cancel</a>
+                        <button class="button" name="bid" >Place Bid</button>
+                        <!-- check bid price higher than startingprice & current bid (skip this feature), 
+                    throw error if higher than max price -->
+                        <a class="button" href="../customerMarketPlace/market.php">Cancel</a>
                     </div>
                     </form>
                     <?php
@@ -209,15 +220,26 @@ $currenttime = strtotime("now");
                     if (isset($_POST['bid'])) {
                         date_default_timezone_set("asia/ho_chi_minh");
                         $bidAmount = $_POST['bidPrice'];
-                        $currentDate = date("Y-m-d h:i:s");  
+                        $currentDate = date("Y-m-d h:i:s");
                         $limit=1000;
                         $query1 = "INSERT INTO bidreport(`productID`,`bidderID`,`bidDateTime`,`bidamount`)
                         VALUES ('$id','$customerID','$currentDate','$bidAmount')";
-                        $query2="UPDATE auctionproduct SET maximumPrice=$bidAmount WHERE productID='$id' ";
+                        $query2="UPDATE auctionproduct SET maximumPrice='$bidAmount' WHERE productID='$id' ";
+                        $query3="SELECT  sum(bid_value) as  totalSum FROM(
+                        SELECT MAX(b.bidamount) as bid_value,MAX(b.bidderID)  
+                        FROM bidreport as b
+                        WHERE bidderID='$customerID'
+                        GROUP BY  productID 
+                        )b";
+                        $query3_run=mysqli_query($con,$query3);
+                        $query3_result=mysqli_fetch_assoc($query3_run);
+                        $sumBid=$query3_result["totalSum"];
+
+
 
                         if ($seller!=$customerID) {
-                            if($balance>$maxPrice){
-                                if($bidAmount > $maxPrice and $bidAmount<=($maxPrice+$limit) and $bidAmount <=$balance){
+                            if($balance>$maxPrice){   
+                                if($bidAmount > $maxPrice and $bidAmount<=($maxPrice+$limit) and $bidAmount <=$balance and ($bidAmount+$sumBid)<$balance ){
                                     if( $query_run1=mysqli_query($con,$query1)){
                                         
                                         echo '<script> alert("Bid successfully"); </script>';
@@ -226,14 +248,14 @@ $currenttime = strtotime("now");
                                     }         
                                 }
                                 else{
-                                    echo'<script> alert("Your bid amount may not be enough to bid or exceed the limit!"); </script>';
+                                    echo'<script> alert("Your bid amount may not be valid or exceed the payment capability!"); </script>';
                                 }
                             }
                             else{
                                 echo '<script> alert("Your balance is insufficient to bid!!"); </script>';
                             }
                         } else {
-                            echo '<script> alert("You cannot bid your own product!"); </script>';
+                            echo '<script> alert("You cannnot bid your own product!"); </script>';
                         }
                     }
                     ?>
@@ -249,24 +271,7 @@ $currenttime = strtotime("now");
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <script>
-        var d = new Date();
-        var f = d.toUTCString();
-        document.getElementById("card1").innerHTML = f;
-    </script>
-
-    <script>
-        var d = new Date();
-        var e = d.toUTCString();
-        document.getElementById("card2").innerHTML = e;
-    </script>
-
-    <script>
-        var d = new Date();
-        var g = d.toUTCString();
-        document.getElementById("card3").innerHTML = g;
-    </script>
-
+   
 </body>
 
 </html>
