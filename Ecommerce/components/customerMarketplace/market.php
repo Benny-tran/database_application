@@ -211,7 +211,8 @@ if (isset($_GET['filter'])) {
                       <div class="form-group" style="width: 290px; margin-left:5px;">
                         <input type="text" class="form-control form-control-sm col-12 " id="" placeholder="$$$" 
                         value="<?php 
-                                  if ('maximumPrice' === 0){
+                                  $maximumPrice = $row['maximumPrice'];
+                                  if ($maximumPrice == 0){
                                     echo $row['startingPrice'];
                                     }else {
                                         echo $row['maximumPrice']; 

@@ -140,8 +140,9 @@ if($email != false && $password != false){
                     <br>
                     <div id="item"><b>Current Bid:</b> 
                         <?php 
-                            if ('maximumPrice' === 0){
-                                echo $details['startingPrice'];
+                            $maximumPrice = $details['maximumPrice'];
+                            if ($maximumPrice == 0){
+                            echo $details['startingPrice'];
                             }else {
                                 echo $details['maximumPrice']; 
                             }
@@ -192,13 +193,14 @@ if($email != false && $password != false){
                     </div>
                     <br>
                     <div id="item"><b>Maximum Price:</b> 
-                        <?php 
-                        if ('maximumPrice' === 0){
-                            echo $details['startingPrice'];
+                    <?php 
+                        $maximumPrice = $details['maximumPrice'];
+                        if ($maximumPrice == 0){
+                        echo $details['startingPrice'];
                         }else {
                             echo $details['maximumPrice']; 
                         }
-                        ?>
+                    ?>
                     </div>
                     <br>
                     <hr class="border-dark">
@@ -218,7 +220,7 @@ if($email != false && $password != false){
                     </div>
                     </form>
                     <?php
-                    require 'db.php';
+                    include ('db.php');
                     if (isset($_POST['bid'])) {
                         date_default_timezone_set("asia/ho_chi_minh");
                         $bidAmount = $_POST['bidPrice'];
@@ -243,25 +245,27 @@ if($email != false && $password != false){
                             if($balance>$maxPrice){   
                                 if($bidAmount > $maxPrice and $bidAmount<=($maxPrice+$limit) and $bidAmount <=$balance and ($bidAmount+$sumBid)<$balance){
                                     if( $query_run1=mysqli_query($con,$query1)){
-                                        
-                                        echo '<script> alert("Bid successfully"); </script>';
                                         $query_run2=mysqli_query($con,$query2);
-                                        header("Refresh:0");  
+                                        echo '<script> alert("Bid successfully"); </script>';
+                                        header('Location: productDetail.php');  
                                     }     
-                                    else{
-                                        echo'<script> alert("Your bid amount may not be valid or the number is so HIGH compare with the current BID or exceed the payment capability!"); </script>';
-                                    }    
+                                      
                                 }
                                 else{
-                                    echo'<script> alert("You cannot bid your own product!"); </script>';
-                                }
+                                    echo'<script> alert("Your bid amount may not be valid or the number is so HIGH compare with the current BID or exceed the payment capability!"); </script>';
+                                    header('Location: productDetail.php'); 
+                                }  
                             }
                             else{
                                 echo '<script> alert("Your balance is insufficient to bid!!"); </script>';
+                                header('Location: productDetail.php'); 
                             }
                         } else {
                             echo '<script> alert("You cannot bid your own product!"); </script>';
+                            header('Location: productDetail.php'); 
                         }
+                    } else {
+                        header('Location: productDetail.php');   
                     }
                     ?>
                 </div>
