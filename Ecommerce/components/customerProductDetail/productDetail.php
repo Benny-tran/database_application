@@ -110,7 +110,7 @@ if($email != false && $password != false){
                 $status=$details['statusProduct'];
                 $productName=$details['productName'];
                 $startPrice=$details['startingPrice'];
-                global $id,$status,$productName,$startPrice;
+                global $id,$status,$productName,$startPrice,$seller;
             }
             ?>
             <div class="row">
